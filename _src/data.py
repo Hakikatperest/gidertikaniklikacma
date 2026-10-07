@@ -243,8 +243,43 @@ KOPRU = {
 
 # ── Müşteri yorumları ───────────────────────────────────────────────────────
 # ⛔ YALNIZ GERÇEK yorum (Google İşletme Profili vb.). Uydurma yorum = Google yaptırımı + Ticari Reklam Yönetmeliği.
-# Biçim: ("Ad S.", "İlçe", puan 1-5, "yorum metni", "Google yorumu")   Boşken bölüm sitede görünmez, aggregateRating basılmaz.
-YORUMLAR = []
+# 2026-10-07: kullanıcı Google İşletme Profili yorumlarının ekran görüntülerini verdi; metinler BİREBİR aktarıldı (yazım hataları dahil —
+# düzeltilmiş yorum gerçek yorum değildir). İsim, gizlilik için "Ad S." biçimine kısaltılır (build.kisa_ad).
+# konu: "su" (su kaçağı) · "tik" (tıkanıklık) · "genel". Puanların tamamı 5. Sahip yanıtları ALINMADI.
+# ⛔ aggregateRating / Review şeması BASILMAZ (Google: kendi sitende kendi işletmen için yıldız gösterilmez; Google yorumlarını işaretlemek kural dışı).
+# Biçim: (ad, puan, metin, konu)
+YORUMLAR = [
+ ("Önder", 5, "Gömme Rezervuarımda akıntı vardı. Ekrem Bey kısa sürede gelip sorunumuzu hızlıca çözdü. Teşekkürler", "genel"),
+ ("hasan onur", 5, "Ekrem usta hızlı çözdü tafsiye ederim", "genel"),
+ ("Emir Sucu", 5, "Ekrem abi eline sağlık, işini gerçekten çok güzel yaptın. Hem hızlı hem de temiz çalıştın, sorunumuzu kısa sürede hallettin. Güler yüzün ve ilginden dolayı da ayrıca teşekkür ederim. Tesisat işi olan herkese gönül rahatlığıyla tavsiye ederim. Emeğine sağlık Ekrem abi.", "genel"),
+ ("rukiye Kılıç", 5, "Eline sağlık ustam", "genel"),
+ ("Duygu Çakır", 5, "İlgi ve alakanız için cok teşekkür ederim işinizin hakkını veriyosunuz artık tesisat konusunda güvene biliceğim tek kişisiniz👏✨", "genel"),
+ ("Esra Güven", 5, "Klozet montajı, iç takım değişikliği ve musluk montajı yaptırdık. İşinde ilgili ve bilgili bir tesisatçı arıyorsanız doğru adrestesiniz.", "genel"),
+ ("Hüseyin San", 5, "Su sorunumuzu birkaç dakikada çözdü eline sağlık", "genel"),
+ ("hanifi kurnaz", 5, "Ustalar işin hakını veriyor tıkanıklığı hemen çözdüler", "tik"),
+ ("Berat Zan", 5, "Çok teşekkür ediyorum abi eline koluna sağlık iki defa geldi işimizi gördü temiz işçilik temiz bir insan güvenlilir tafisiye ediyorum", "genel"),
+ ("Fatih ORKİ", 5, "Ekrem abi nin gerek yaklaşımı gerek ise iş yapış şeklinden çok memnun kaldık. 1 seneyi aşkındır banyomuza sıcak su konusunda problem yaşıyorduk kendisi durumu iyi analiz ederek sorunsuz bir şekilde hallettik kendisine tekrar çok teşekkür ediyorum.", "genel"),
+ ("Eser Sazak", 5, "Evimizde bulunan şu kaçağıyla ilgili ulaştığımız Ekrem usta geldi kontrolünü yaptı sorunu hızlıca çözdü. Gönül rahatlığıyla tercih edebilirsiniz.", "su"),
+ ("Bektaş Dal", 5, "Muhteşem hızlı ve süper bir insan", "genel"),
+ ("Muharrem Demirel", 5, "Ekrem Bey çok ilgiliydi. İlk geldiği gün sorunu saptadı. Ardından da işlemi gerçekleştirdi. Kolaylıklar dilerim", "genel"),
+ ("Adem Avinca", 5, "Su kaçağimiza noktasal tespit etti eline sağlık", "su"),
+ ("Berkcan Özkan", 5, "Berber dükkanımızda tıkalı hattımızı Ekrem usta 1,2 dakika içinde halletti hizmeti için teşekkür ederim hepinize öneriyorum", "tik"),
+ ("Yilmaz Ozcelik", 5, "Ekrem usta ellerine sağlık işimizi çözdü", "genel"),
+ ("Şükrü Demirci", 5, "Eline sağlık ustam temiz ve uygun iş", "genel"),
+ ("begum Sarıdağ", 5, "Eline sağlık ustam hen pirofesyonel hemde çok uygun", "genel"),
+ ("ilbeyi KARAKELLE", 5, "Geçen hafta üst komşumun banyo daki su tesisatından su geçmesi kaynaklı sorun yaşadık ancak çınar tesisat tan Ekrem usta çok hızlı tespit yaparak sorunu çözüme kavuşturdu.", "su"),
+ ("Ferhat Uçar", 5, "Yapılan tesisatlar için teşekkür ederiz ilgi alaka içinde çok teşekkür ederiz", "genel"),
+ ("YA", 5, "Evimizdeki kaçağı nokta atışı tespit etti ve kısa sürede onardı. İşinde çok iyi çözüm odaklı.", "su"),
+ ("Kadir Yılmaz", 5, "Bina giderimizde bulamadığımız kaçağı titizlikle kırmadan dökmeden tespit edip yaşadığımız su kaçağından bizi kurtaran bu ustaya teşekkür ediyorum.", "su"),
+ ("Saitali Sezer", 5, "Tesatta tıkanıklık vardı temiz bi işçilik çıkarttı ellerine sağlık fiyat olarakta çok uygun du teşekkür ederim", "tik"),
+ ("Cüneyt Mesut", 5, "Usta bizim işimizi hızlıca halletti teşekkür eder tavsiye ederiz", "genel"),
+ ("Yusuf Kaya", 5, "Gelen beyefendi çok ilgilendi. Doğrudan bir şeyleri değiştirmek yerine sorunu analiz etmeye çalışması işinde dürüst ve çok güzel bir yaklaşım açıkçası. Uzun süredir devam eden sorun sayesinde çözüldü", "genel"),
+ ("Ertan Gencer", 5, "Ekrem usta oldukça özenle ve detaylı şekilde inceledi, sorunumuzu çözdü. Detaylı bilgi verdi. Emeğine sağlık. Gönül rahatlığıyla tavsiye ederim.", "genel"),
+ ("Umit Elik", 5, "Öncelikle teşekkür ediyorum bugün su tesisatından çok büyük bir sıkıntı yaşamıştık ustamız çok güzel ilgilendi dahiyane bir şekilde sıkıntıyı çözdü teşekkür ederiz", "genel"),
+ ("Gürkan Bulsun", 5, "Daire içindeki su sızıntısını hızlı bi şekilde tespit ettiler ve sorunu 1 saat içerisinde hallettiler çok memnun kaldık teşekkür ederiz", "su"),
+ ("Metin Gizi", 5, "Ekrem usta çok teşekkür ediyoruz ustalık pimaş hattımızı 5 dakikada açık tertemiz bize teslim etti kesinlikle tavsiye edilir", "tik"),
+ ("İlhan Sağdıç", 5, "Binamızda Üst kattan damlayan suyu noktasal olarak bulduğum 15 dakikada bütün sorunumuzu çözdü Ayrıca çok uygun fiyatlı Herkese tavsiye ederim", "su"),
+]
 
 # ── İlçeler ─────────────────────────────────────────────────────────────────
 # Alanlar: yapi (yapı stoğu) · gider (daire/bina içi) · dis (bina dışı hat) · saha (sahada dikkat) · uzak (30 dk geçerli değil)

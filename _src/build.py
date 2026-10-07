@@ -433,13 +433,40 @@ def konum_blok():
  </div>
 </div></section>"""
 
-def yorumlar():
-    """⛔ Yalnız GERÇEK yorum (data.YORUMLAR). Boşken bölüm basılmaz; aggregateRating şeması KONMAZ."""
-    if not D.YORUMLAR: return ""
-    k = "".join(f'<figure class="ykart"><div class="yildiz" aria-label="{p} yıldız">{"★" * p}{"☆" * (5 - p)}</div>'
-                f'<blockquote>{e(m)}</blockquote><figcaption><b>{e(ad)}</b> · {e(ilce)}<small>{e(kaynak)}</small></figcaption></figure>'
-                for ad, ilce, p, m, kaynak in D.YORUMLAR)
-    return f'<section class="blok"><p class="bolum-ust">Müşteri yorumları</p><h2>Müşterilerimiz ne diyor?</h2><div class="ykart-izgara">{k}</div></section>'
+YILDIZ = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg>'
+YR_RENK = ["#0A8FD6", "#7C3AED", "#DB2777", "#059669", "#EA580C", "#2563EB", "#9333EA", "#0D9488"]
+KONU_AD = {"su": "Su kaçağı", "tik": "Tıkanıklık"}
+
+def kisa_ad(ad):
+    """Gizlilik: 'Emir Sucu' → 'Emir S.' (Türkçe büyük harf kuralıyla)."""
+    buyuk = lambda w: (w[0].replace("i", "İ").upper() + w[1:].replace("I", "ı").replace("İ", "i").lower()) if w else w
+    p = ad.split()
+    if len(p) == 1: return p[0] if p[0].isupper() and len(p[0]) <= 3 else buyuk(p[0])
+    return f"{buyuk(p[0])} {buyuk(p[-1])[0]}."
+
+def yorumlar(konu=None, baslik="Müşterilerimiz ne diyor?", ust="Google yorumları"):
+    """⛔ Yalnız GERÇEK yorum (data.YORUMLAR, Google'dan birebir). aggregateRating/Review şeması KONMAZ."""
+    liste = [y for y in D.YORUMLAR if konu is None or y[3] in konu]
+    if not liste: return ""
+    k = []
+    for n, (ad, p, m, kn) in enumerate(liste):
+        ka = kisa_ad(ad); renk = YR_RENK[tohum(ad) % len(YR_RENK)]
+        etiket = f'<span class="yr-konu">{e(KONU_AD[kn])}</span>' if kn in KONU_AD else ""
+        k.append(f'<figure class="yr-kart"><div class="yr-ust"><span class="yr-av" style="background:{renk}" aria-hidden="true">{e(ka[0])}</span>'
+                 f'<figcaption><b>{e(ka)}</b><small>Google yorumu</small></figcaption>{etiket}</div>'
+                 f'<div class="yr-yildiz" role="img" aria-label="{p} üzerinden 5 yıldız">{YILDIZ * p}</div>'
+                 f'<blockquote>{e(m)}</blockquote></figure>')
+    toplam = len(D.YORUMLAR)
+    ozet = (f"Google İşletme Profilimizdeki {toplam} yorumu olduğu gibi paylaştık; hepsi 5 yıldız." if konu is None else
+            f"Google İşletme Profilimizdeki {toplam} yorumun tamamı 5 yıldız; burada bu konudaki {len(liste)} yorumu paylaştık.")
+    return f"""<section class="blok yr-blok"><div class="yr-bas">
+  <div><p class="bolum-ust">{e(ust)}</p><h2>{e(baslik)}</h2>
+   <p class="yr-ozet"><span class="yr-yildiz yr-yildiz-b" aria-hidden="true">{YILDIZ * 5}</span><span>{e(ozet)}</span></p></div>
+  <div class="yr-ok" aria-hidden="true"><button type="button" class="yr-geri" tabindex="-1">{svg('ok')}</button><button type="button" class="yr-ileri" tabindex="-1">{svg('ok')}</button></div>
+ </div>
+ <div class="yr-serit" tabindex="0" aria-label="Müşteri yorumları, yana kaydırın">{''.join(k)}</div>
+ <p class="yr-alt">Yorumlar Google'da yazıldığı gibi, düzeltme yapılmadan aktarılmıştır; isimler kısaltılmıştır. <a href="{S['harita']}" target="_blank" rel="noopener">Tüm yorumları Google'da okuyun {svg('ok')}</a></p>
+</section>"""
 
 
 SAHNE = ('<div class="sahne" aria-hidden="true"><div class="zemin-izgara"></div>'
@@ -782,6 +809,7 @@ def hizmet_sayfasi(h):
  </section>
  <section class="blok kutu-vurgu"><h2>Usta gelene kadar ne yapmalısınız?</h2>
   <ol class="adim-liste">{''.join(f'<li>{e(o)}</li>' for o in h['oneri'])}</ol></section>
+ {yorumlar({"tik"}, "Tıkanıklık için bizi çağıranlar ne diyor?")}
  {rehber_kutu([r for r in IC.REHBER if r['hizmet'] == hs])}
  {sss_html(sss, Y('Anadolu Yakası {kisa}: sık sorulan sorular'))}
  <section class="blok"><h2>Diğer hizmetlerimiz</h2><div class="hkart-izgara hkart-3">{diger}</div></section>"""
@@ -806,6 +834,7 @@ def kamera_sayfasi():
  <section class="blok"><h2>Kamerada neler görüyoruz?</h2>{h3_izgara(K['neler'])}</section>
  <section class="blok fiyat-blok"><h2>Kameralı tespit fiyatı neye göre değişir?</h2>
   <p class="blok-giris">{e(FIYAT_KISA)}</p>{h3_izgara(K['fiyat'], 'is-izgara is-3')}</section>
+ {yorumlar({"tik", "su"}, "Tespit için bizi çağıranlar ne diyor?")}
  {usta_dikkat()}
  <section class="blok"><h2>Hangi ilçelerde kameralı tespit yapıyoruz?</h2>
   <p>Anadolu yakasının 14 ilçesinde: {ilce_bag}. {e(sure())}</p></section>
@@ -847,6 +876,7 @@ def su_kacagi_sayfasi():
  <section class="blok kutu-vurgu"><h2>Su sayacıyla kaçak kontrolü: evde kendiniz yapın</h2>
   <ol class="adim-liste">{''.join(f'<li>{e(o)}</li>' for o in K['sayac'])}</ol></section>
  {galeri(D.SU_FOTO, "Sahadan: kaçak noktasını açma ve boru onarımı")}
+ {yorumlar({"su"}, "Su kaçağı için bizi çağıranlar ne diyor?")}
  <section class="blok"><h2>Su kaçağı İSKİ'nin mi, sizin mi sorumluluğunuzda?</h2>{P(K['sorumluluk'])}</section>
  <section class="blok kutu-uyari"><h2>{svg('uyari')} Tavandan su damlıyorsa ne yapmalısınız?</h2>{P(K['acil'])}
   {servis_no("7/24 su kaçağı ve tıkanıklık servis numarası")}</section>
@@ -931,6 +961,7 @@ def anasayfa():
   {P(IC.TANITIM)}
   {h3_izgara(neden_biz)}
   <p><a class="metin-bag" href="{ic('hakkimizda/')}">Hakkımızda daha fazlası {svg('ok')}</a></p></section>
+ {yorumlar()}
  <section class="blok">
   <p class="bolum-ust">Acil servis</p><h2>Anadolu Yakası 7/24 Acil Tıkanıklık Açma Servisi</h2>
   <p>Gece yarısı taşan bir klozet, misafir gelmeden kapanan bir mutfak gideri, bayram sabahı birikmeye başlayan duş suyu… Tıkanıklık mesai saati bilmiyor, biz de bilmiyoruz :) Anadolu yakasının 14 ilçesinde 7 gün 24 saat acil tıkanıklık açma servisi veriyoruz; aradığınızda önce suyu nasıl durduracağınızı anlatıyor, sonra ekibi yola çıkarıyoruz.</p>
@@ -958,7 +989,6 @@ def anasayfa():
  {usta_dikkat()}
  {rehber_kutu(IC.REHBER, "Tıkanıklık rehberi: evde ne yapabilirsiniz?")}
  {saha_galeri("Sahadan fotoğraflar")}
- {yorumlar()}
  {konum_blok()}
  {sss_html(ANA_SSS)}
 </div>
@@ -1022,7 +1052,7 @@ def rehber_ana():
 def hakkimizda():
     k = "".join(f'<section class="blok"><h2>{e(b)}</h2>{"".join(P(x) for x in ps)}</section>' for b, ps in IC.HAKKIMIZDA)
     govde = (f'<div class="hakkimizda-g">{gorsel(D.SAHA_FOTO[1][0], D.SAHA_FOTO[1][1], boy="(min-width:980px) 420px, 100vw")}</div>'
-             + k + saha_galeri("Sahadan fotoğraflar") + usta_dikkat() + konum_blok())
+             + k + yorumlar() + saha_galeri("Sahadan fotoğraflar") + usta_dikkat() + konum_blok())
     return basit(f"Hakkımızda | {S['isletme']} · Gider Tıkanıklık Açma",
                  f"{S['isletme']}: Anadolu Yakası'nın 14 ilçesinde kırmadan, kameralı tespitle tıkanıklık açma. 7/24, fiyat işe başlamadan söylenir.",
                  "hakkimizda/", "Hakkımızda", govde, "hakkimizda")

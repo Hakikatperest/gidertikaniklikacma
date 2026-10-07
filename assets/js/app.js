@@ -97,6 +97,15 @@
     });
   });
 
+  // yorum şeridi: ok düğmeleri bir kart genişliği kaydırır (kaydırmanın kendisi CSS scroll-snap)
+  [].forEach.call(document.querySelectorAll('.yr-blok'), function (b) {
+    var sr = b.querySelector('.yr-serit'); if (!sr) return;
+    var adim = function (y) { var k = sr.querySelector('.yr-kart'); sr.scrollBy({ left: y * (k ? k.offsetWidth + 16 : 320), behavior: 'smooth' }); };
+    var g = b.querySelector('.yr-geri'), i = b.querySelector('.yr-ileri');
+    if (g) g.addEventListener('click', function () { adim(-1); });
+    if (i) i.addEventListener('click', function () { adim(1); });
+  });
+
   // ilçe kartı ↔ şematik harita vurgusu
   [].forEach.call(document.querySelectorAll('.ikart[data-ilce]'), function (kart) {
     var hb = document.querySelector('.hb[data-ilce="' + kart.getAttribute('data-ilce') + '"]');
