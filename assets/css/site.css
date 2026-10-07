@@ -670,3 +670,22 @@ p{margin:0 0 1em}
 .yr-alt a{display:inline-flex;align-items:center;gap:4px;font-weight:700}
 .yr-alt .ik{width:16px;height:16px}
 @media (max-width:760px){.yr-ok{display:none}.yr-kart{flex-basis:84%}}
+/* anasayfa afişi — tamamı tel: bağlantısı. Animasyonlar yalnız transform/opacity */
+.afis{position:relative;display:block;margin:28px 0 6px;border-radius:var(--r);overflow:hidden;box-shadow:0 22px 50px -22px rgba(10,60,120,.55);border:1px solid var(--cizgi-2);transition:transform .25s,box-shadow .25s;isolation:isolate}
+.afis img{display:block;width:100%;height:auto}
+.afis-isik{position:absolute;inset:0;pointer-events:none;background:linear-gradient(100deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%);transform:translateX(-120%);animation:afis-isik 4.5s ease-in-out 1.2s infinite}
+@keyframes afis-isik{0%{transform:translateX(-120%)}38%,100%{transform:translateX(120%)}}
+.afis-rozet{position:absolute;right:14px;top:14px;display:inline-flex;align-items:center;gap:8px;padding:8px 14px 8px 8px;border-radius:99px;background:linear-gradient(135deg,#FF7A1A,#EA580C);color:#fff;font-weight:800;font-size:.9rem;box-shadow:0 10px 24px -10px rgba(234,88,12,.9)}
+.afis-rozet::before{content:"";position:absolute;inset:0;border-radius:inherit;border:2px solid #FF7A1A;animation:afis-nabiz 1.8s ease-out infinite}
+@keyframes afis-nabiz{0%{transform:scale(1);opacity:.9}100%{transform:scale(1.35,1.7);opacity:0}}
+.afis-rozet-ik{width:28px;height:28px;border-radius:50%;background:#fff;color:#EA580C;display:flex;align-items:center;justify-content:center}
+.afis-rozet-ik .ik{width:16px;height:16px;animation:afis-cal 2.4s ease-in-out infinite}
+@keyframes afis-cal{0%,60%,100%{transform:rotate(0)}66%{transform:rotate(-16deg)}72%{transform:rotate(14deg)}78%{transform:rotate(-10deg)}84%{transform:rotate(6deg)}}
+@media (pointer:fine){.afis:hover{transform:translateY(-4px);box-shadow:0 30px 60px -24px rgba(10,60,120,.65)}}
+@media (max-width:640px){.afis{margin-top:22px}.afis-rozet{position:static;display:flex;justify-content:center;border-radius:0;padding:10px;font-size:.95rem;box-shadow:none}.afis-rozet::before{display:none}.afis-rozet-ik{width:26px;height:26px}}
+@media (prefers-reduced-motion:reduce){.afis-isik,.afis-rozet::before,.afis-rozet-ik .ik{animation:none}.afis-isik{display:none}}
+/* logo işareti (satır içi SVG) */
+.logo-isaret{width:44px;height:44px;flex:none;border-radius:12px;box-shadow:0 0 0 1px rgba(255,255,255,.12),0 10px 24px -8px rgba(42,168,245,.65)}
+.logo-ad b{letter-spacing:.04em}
+.logo-ad small{letter-spacing:.2em}
+@media (max-width:520px){.logo-isaret{width:38px;height:38px;border-radius:10px}}

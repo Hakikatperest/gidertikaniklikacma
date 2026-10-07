@@ -20,6 +20,8 @@ GORSELLER = {
  "cinar-su-tesisatcisi.webp":      ("cinar-dort-su-tesisatcisi-dukkan", None, (480, 960, 1360)),
  "su-kacak-tespiti.webp":          ("su-kacagi-tespiti-noktasal-acma", None, (480, 766)),
  "su-tesisatcisi.webp":            ("su-kacagi-tamiri-ppr-boru", None, (480, 766)),
+ # 2026-10-07 kullanıcının afişi (1983×793, yazılı) — anasayfada hero altında tıkla-ara bağlantısı
+ "su-tesisat-ustasi.webp":         ("cinar-dort-su-tesisatcisi-pimas-acma-afis", None, (640, 1024, 1600)),
  "video-poster.jpg":               ("cihazla-kacak-su-tespiti-kapak", None, (360,)),
 }
 # saha fotoğrafları gelince: "dosya.webp": ("anahtar-kelimeli-taban", None, (480, 960))
@@ -44,13 +46,8 @@ def turev():
     im.resize((1200, 801), Image.LANCZOS).save(os.path.join(CIKTI, "og-gider-tikaniklik-acma.jpg"), quality=82, optimize=True)
 
 def favicon():
-    # Lacivert yuvarlak kare + mavi damla (banner logosunun damlası). ⚠️ WebP favicon Google'da görünmez → ico + png.
-    S = 512
-    im = Image.new("RGBA", (S, S), (0, 0, 0, 0)); d = ImageDraw.Draw(im)
-    d.rounded_rectangle((0, 0, S - 1, S - 1), radius=112, fill=(10, 32, 72, 255))
-    d.ellipse((136, 196, 376, 436), fill=(30, 136, 229, 255))
-    d.polygon([(256, 64), (148, 270), (364, 270)], fill=(30, 136, 229, 255))
-    d.ellipse((196, 290, 252, 346), fill=(255, 255, 255, 210))
+    # Logo işareti (boru dirseği + damla) — _src/logo/isaret.svg → render.py → isaret-512.png. ⚠️ WebP favicon Google'da görünmez → ico + png.
+    im = Image.open(os.path.join(KOK, "_src", "logo", "isaret-512.png")).convert("RGBA")
     im.resize((48, 48), Image.LANCZOS).save(os.path.join(KOK, "favicon.ico"), sizes=[(48, 48), (32, 32), (16, 16)])
     for b in (48, 96, 180, 192, 512):
         im.resize((b, b), Image.LANCZOS).save(os.path.join(CIKTI, f"favicon-{b}.png"), optimize=True)

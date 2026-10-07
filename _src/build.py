@@ -173,10 +173,13 @@ def head(baslik, aciklama, yol, sema=None, robots="index,follow", og="images/og-
 <a class="atla" href="#icerik">İçeriğe geç</a>
 """
 
+LOGO_SVG = open(os.path.join(KOK, "_src", "logo", "isaret.svg"), encoding="utf-8").read().strip().replace(
+    '<svg xmlns="http://www.w3.org/2000/svg" ', '<svg class="logo-isaret" aria-hidden="true" focusable="false" ', 1)
+
 def logo():
-    return (f'<a class="logo" href="{ic()}" aria-label="{e(S["marka"])} anasayfa">'
-            f'<img src="{ic("images/favicon-96.png")}" width="42" height="42" alt="">'
-            f'<span class="logo-ad"><b>GİDER TIKANIKLIK</b><small>AÇMA · ANADOLU YAKASI</small></span></a>')
+    """Logo (kullanıcı 2026-10-07: "daha pro, su tesisatı ile alakalı"): boru dirseği + damla işareti + GBP adı."""
+    return (f'<a class="logo" href="{ic()}" aria-label="{e(S["isletme"])} anasayfa">{LOGO_SVG}'
+            f'<span class="logo-ad"><b>ÇINAR DÖRT</b><small>SU TESİSATÇISI</small></span></a>')
 
 def ust(aktif=""):
     hiz = "".join(f'<a{" class=aktif" if aktif == h["slug"] else ""} href="{ic(hiz_yolu(h))}">{svg(h["ikon"])}{e(h["ad"])}</a>'
@@ -927,6 +930,14 @@ def ana_hero():
  </div>
 </section>'''
 
+def afis():
+    """Kullanıcının afişi — tamamı tel: bağlantısı (kullanıcı 2026-10-07: "girişin biraz altına dikkat çekici, tıklanınca aranabilir")."""
+    alt = (S["isletme"] + ": tıkanan pimaşlarınızı kırmadan açmak için bizi arayın, yağlı pimaş hatlarını kırmadan yıkama. Telefon " + S["tel_goster"])
+    return (f'<a class="afis" href="tel:{S["tel_link"]}" aria-label="{e(S["isletme"])} — hemen ara: {S["tel_goster"]}">'
+            f'{gorsel("cinar-dort-su-tesisatcisi-pimas-acma-afis", alt, boy="(min-width:1240px) 1168px, 100vw")}'
+            f'<span class="afis-isik" aria-hidden="true"></span>'
+            f'<span class="afis-rozet"><span class="afis-rozet-ik">{svg("tel")}</span>Dokun, hemen ara</span></a>')
+
 def rehber_kutu(liste, baslik="Kendiniz yapmadan önce okuyun"):
     k = "".join(f'<a class="rkart" href="{ic(r["slug"] + "/")}"><span class="skart-ik">{svg(r["ikon"])}</span>'
                 f'<span><b>{e(r["h1"])}</b><small>{e(r["ozet"][:120].rsplit(" ", 1)[0])}…</small></span>{svg("ok", "ik skart-ok")}</a>'
@@ -947,6 +958,7 @@ def anasayfa():
                 f"fiyat işe başlamadan söylenir. {S['tel_goster']}", "", sema) + ust() + f"""
 {ana_hero()}
 <div class="kap">{guven()}</div>
+<div class="kap">{afis()}</div>
 <div class="kap govde">
  {sorun_secici()}
  <section class="blok">
