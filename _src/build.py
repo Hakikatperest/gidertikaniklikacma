@@ -234,7 +234,7 @@ def alt():
    <p>{e(S['isletme'])} · İstanbul Anadolu Yakası'nın 14 ilçesinde tuvalet, lavabo, banyo ve mutfak gideri tıkanıklığı açma. Kırmadan, gerektiğinde kameralı tespitle; fiyatı işe başlamadan söylüyoruz. 7 gün 24 saat.</p>
    <p class="alt-sat">{svg('tel')}<a href="tel:{S['tel_link']}">{S['tel_goster']}</a></p>
    <p class="alt-sat">{svg('wa')}<a href="https://wa.me/{S['wa']}?text={quote(wa_mesaj())}" target="_blank" rel="noopener">WhatsApp'tan yazın</a></p>
-   <p class="alt-sat">{svg('konum')}<a href="{S['harita']}" target="_blank" rel="noopener">{e(S['isletme'])} · {e(S['konum_ilce'])}, İstanbul</a></p>
+   <p class="alt-sat">{svg('konum')}<a href="{S['harita']}" target="_blank" rel="noopener">{e(S['adres'])}</a></p>
    <p class="alt-sat">{svg('saat')}<span>7 gün 24 saat</span></p>
   </div>
   <div><h2 class="alt-b">Hizmetler</h2><ul class="alt-liste">{hiz}</ul>
@@ -423,11 +423,11 @@ def fiyat_faktor(baslik="Gider tıkanıklık açma fiyatları ne kadar?"):
 def konum_blok():
     return f"""<section class="blok konum-blok"><div class="konum-izgara">
  <div><p class="bolum-ust">Konum</p><h2>Google Haritalar'da {e(S['isletme'])}</h2>
-  <p class="alt-sat">{svg('konum')}<span>{e(S['konum_ilce'])}, İstanbul · Anadolu yakasının 14 ilçesine geliyoruz</span></p>
+  <p class="alt-sat">{svg('konum')}<span>{e(S['adres'])}</span></p>
   <p class="alt-sat">{svg('saat')}<span>7 gün 24 saat · <span class="durum-rozet durum-ic"><span class="canli"></span>şu an açık</span></span></p>
   <p class="alt-sat">{svg('tel')}<a href="tel:{S['tel_link']}">{S['tel_goster']}</a></p>
-  <p>Hizmeti adresinize geliyoruz; çağrı için önce telefonla ya da WhatsApp'tan ulaşmanız yeterli.</p>
-  <p><a class="metin-bag" href="{S['harita']}" target="_blank" rel="noopener">Google Haritalar'da aç {svg('ok')}</a></p></div>
+  <p>Anadolu yakasının 14 ilçesine adresinize geliyoruz; çağrı için telefonla ya da WhatsApp'tan ulaşmanız yeterli.</p>
+  <p><a class="metin-bag" href="{S['harita']}" target="_blank" rel="noopener">Google Haritalar'da yol tarifi al {svg('ok')}</a></p></div>
  <div class="harita-cerceve" data-harita="{e(S['harita_embed'])}">
   <button type="button" class="harita-ac">{svg('konum')}<span>Haritayı göster</span><small>Tıklayınca Google Haritalar yüklenir</small></button>
  </div>
@@ -676,7 +676,7 @@ def ilce_sayfasi(i):
     komsu = "".join(f'<li><a href="{ic(ilce_yolu(ILCE[k]))}">{e(ILCE[k]["ad"])} tıkanıklık açma servisi</a></li>' for k in i["komsu"])
     konum = ""
     if s == "sancaktepe":
-        konum = (f'<p class="not">{svg("konum")}<span>Google Haritalar kaydımız Sancaktepe\'de: {e(S["isletme"])}. '
+        konum = (f'<p class="not">{svg("konum")}<span>Adresimiz Sancaktepe\'de: {e(S["isletme"])}, {e(S["adres"])}. '
                  f'<a href="{S["harita"]}" target="_blank" rel="noopener">Haritada aç</a></span></p>')
     sema = [sema_hizmet(H1, "Tıkanıklık açma", i, yol), sema_sss(sss), kir_ld]
     govde = f"""
@@ -871,7 +871,7 @@ ANA_SSS = [
  ("Tıkanıklık açarken kırma yapılıyor mu?", "Hayır, tıkanıklığı gider ağzından makineyle açıyoruz. Gerektiğinde hattın içini kamerayla görüyoruz; kırma ancak boru kırılmış ya da çökmüşse gündeme gelir ve bunu önce görüntüyle size gösteriyoruz."),
  ("Fiyatı ne zaman öğrenirim?", "Fotoğraf ya da videoyla yaklaşık bilgi verebiliyoruz. Kesin fiyatı usta yerinde baktıktan sonra, işe başlamadan söylüyor; onayınız olmadan işe başlamıyoruz."),
  ("Belediye ya da İSKİ evimdeki gideri açar mı?", "Hayır. Ev ve bina içindeki tesisat mülk sahibinin sorumluluğundadır. İSKİ (ALO 185) yalnızca sokaktaki ana kanalizasyon hattına bakar."),
- ("Google Haritalar'da sizi nasıl bulurum?", f"Google Haritalar'da {S['isletme']} adıyla kayıtlıyız; konumumuz Sancaktepe'de."),
+ ("Google Haritalar'da sizi nasıl bulurum?", f"Google Haritalar'da {S['isletme']} adıyla kayıtlıyız. Adresimiz: {S['adres']}."),
 ]
 
 def ana_hero():
@@ -1051,13 +1051,13 @@ def iletisim():
     govde = f"""<section class="blok iletisim">
  <div class="ilt-kart">{svg('tel')}<div><h2>Telefon</h2><p><a href="tel:{S['tel_link']}">{S['tel_goster']}</a></p></div></div>
  <div class="ilt-kart">{svg('wa')}<div><h2>WhatsApp</h2><p>Fotoğraf ya da video göndererek sorunu anlatabilirsiniz.</p>{wa_btn(wa_mesaj())}</div></div>
- <div class="ilt-kart">{svg('konum')}<div><h2>Google Haritalar</h2><p>{e(S['isletme'])} · {e(S['konum_ilce'])}, İstanbul</p><p><a href="{S['harita']}" target="_blank" rel="noopener">Haritada aç</a></p></div></div>
+ <div class="ilt-kart">{svg('konum')}<div><h2>Adres</h2><p>{e(S['isletme'])}<br>{e(S['adres'])}</p><p><a href="{S['harita']}" target="_blank" rel="noopener">Haritada aç</a></p></div></div>
  <div class="ilt-kart">{svg('saat')}<div><h2>Çalışma saatleri</h2><p>7 gün 24 saat · <span class="durum-rozet durum-ic"><span class="canli"></span>şu an açık</span></p><p><a href="{ic('hizmet-bolgeleri/')}">Hizmet bölgeleri</a></p></div></div>
 </section>
 <figure class="blok">{gorsel(D.SAHA_FOTO[0][0], D.SAHA_FOTO[0][1], boy="(min-width:980px) 760px, 100vw")}<figcaption>{e(D.SAHA_FOTO[0][1])}</figcaption></figure>
 {konum_blok()}"""
     return basit(f"İletişim | {S['isletme']} · {S['tel_goster']}",
-                 f"{S['isletme']} (Gider Tıkanıklık Açma) iletişim: {S['tel_goster']}, WhatsApp, 7/24. Anadolu Yakası 14 ilçe.",
+                 f"{S['isletme']} iletişim: {S['tel_goster']}, WhatsApp, 7/24. Adres: Veysel Karani Cd. No:153/C, Sancaktepe/İstanbul.",
                  "iletisim/", "İletişim", govde, "iletisim")
 
 def gizlilik():
@@ -1069,7 +1069,7 @@ def gizlilik():
     govde = f"""<section class="blok metin">
 <h2>Kişisel veriler</h2>{p("Bu site üzerinden kişisel veri toplanmaz ve saklanmaz. Teklif formu yalnızca WhatsApp'ta gönderilecek bir mesaj hazırlar; mesajı siz gönderirsiniz. Bizi telefonla aradığınızda ya da WhatsApp'tan yazdığınızda paylaştığınız ad, telefon numarası ve adres bilgisi yalnızca talep ettiğiniz hizmeti vermek amacıyla kullanılır ve üçüncü kişilerle paylaşılmaz.")}
 <h2>Çerezler ve ölçüm</h2>{p(olcum)}
-<h2>Haklarınız</h2>{p("6698 sayılı Kişisel Verilerin Korunması Kanunu kapsamındaki haklarınızla ilgili talepleriniz için " + S["tel_goster"] + " numarasından bize ulaşabilirsiniz.")}
+<h2>Haklarınız</h2>{p("6698 sayılı Kişisel Verilerin Korunması Kanunu kapsamındaki haklarınızla ilgili talepleriniz için " + S["tel_goster"] + " numarasından ya da " + S["adres"] + " adresinden bize ulaşabilirsiniz.")}
 </section>"""
     return basit(f"Gizlilik Politikası | {S['isletme']}", f"{S['isletme']} gizlilik politikası ve çerez bilgilendirmesi.",
                  "gizlilik-politikasi/", "Gizlilik Politikası", govde)

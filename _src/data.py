@@ -20,10 +20,13 @@ SITE = {
     "hero_tema":  "koyu",
     # 2026-10-07: kullanıcı Google İşletme Profili haritasını verdi ("Çınar Dört Su Tesisatçısı markamız").
     # NAP tutarlılığı: şemada name = GBP adı, alternateName = site markası. Pin: Yunus Emre Mah., Sancaktepe
-    # (OSM ters geokodlama). ⛔ Sokak/kapı no VERİLMEDİ → yalnız ilçe düzeyinde adres.
+    # (OSM ters geokodlama); açık adres aşağıda.
     "isletme":    "Çınar Dört Su Tesisatçısı",
     "konum_ilce": "Sancaktepe",
-    "adres_sema": {"addressLocality": "Sancaktepe", "addressRegion": "İstanbul", "addressCountry": "TR"},
+    # 2026-10-07: kullanıcı açık adresi verdi (GBP ile birebir).
+    "adres":      "Yunus Emre Mah., Veysel Karani Cd. No:153/C, 34791 Sancaktepe/İstanbul",
+    "adres_sema": {"streetAddress": "Yunus Emre Mah., Veysel Karani Cd. No:153/C", "postalCode": "34791",
+                   "addressLocality": "Sancaktepe", "addressRegion": "İstanbul", "addressCountry": "TR"},
     "geo":        (41.01815641881674, 29.25504707594947),
     "harita":     "https://maps.google.com/?cid=14505024090943010980",
     "harita_embed": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3010.324482972327!2d29.25504707594947!3d41.01815641881674!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cad140b8e0e6f3%3A0xc94c328f4f2438a4!2zw4fEsW5hciBEw7ZydCBTdSBUZXNpc2F0w6fEsXPEsQ!5e0!3m2!1str!2str!4v1791370184475!5m2!1str!2str",
