@@ -45,6 +45,15 @@ def turev():
     im = Image.open(os.path.join(KAYNAK, "banner-orijinal.webp")).convert("RGB").crop((890, 140, 1639, 640))
     im.resize((1200, 801), Image.LANCZOS).save(os.path.join(CIKTI, "og-gider-tikaniklik-acma.jpg"), quality=82, optimize=True)
 
+def og_afis():
+    # og:image 1200×630 — kullanıcının afişinden (sol kısım: maskot + marka + telefon; sağdaki fotoğraf kırpılır)
+    im = Image.open(os.path.join(KAYNAK, "su-tesisat-ustasi.webp")).convert("RGB")
+    # başlık "TESİSATÇISI" ~1550px'te bitiyor → 1580px genişlik al, 1200 genişliğe indir, 630 yüksekliğe beyaz kenarla tamamla
+    k = im.crop((0, 0, 1580, im.height)); h = round(k.height * 1200 / k.width)
+    k = k.resize((1200, h), Image.LANCZOS)
+    tuval = Image.new("RGB", (1200, 630), (255, 255, 255)); tuval.paste(k, (0, (630 - h) // 2))
+    tuval.save(os.path.join(CIKTI, "og-cinar-dort-su-tesisatcisi.jpg"), quality=84, optimize=True)
+
 def favicon():
     # Logo işareti (boru dirseği + damla) — _src/logo/isaret.svg → render.py → isaret-512.png. ⚠️ WebP favicon Google'da görünmez → ico + png.
     im = Image.open(os.path.join(KOK, "_src", "logo", "isaret-512.png")).convert("RGBA")
@@ -54,4 +63,4 @@ def favicon():
     print("favicon tamam")
 
 if __name__ == "__main__":
-    turev(); favicon()
+    turev(); og_afis(); favicon()

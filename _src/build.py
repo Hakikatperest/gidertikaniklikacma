@@ -144,7 +144,7 @@ def ads_head():
             "<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}"
             f"gtag('js',new Date());gtag('config','{a['etiket']}');window.W4_ADS={ayar};</script>\n")
 
-def head(baslik, aciklama, yol, sema=None, robots="index,follow", og="images/og-gider-tikaniklik-acma.jpg"):
+def head(baslik, aciklama, yol, sema=None, robots="index,follow", og="images/og-cinar-dort-su-tesisatcisi.jpg"):
     kanonik = ALAN + "/" + yol
     ld = "".join(f'<script type="application/ld+json">{json.dumps(s, ensure_ascii=False)}</script>\n' for s in (sema or []))
     return f"""<!DOCTYPE html>
@@ -263,7 +263,7 @@ def alt():
 # ── şema ────────────────────────────────────────────────────────────────────
 def isletme():
     return {"@type": "Plumber", "@id": ALAN + "/#isletme", "name": S["isletme"], "alternateName": S["marka"],
-            "url": ALAN + "/", "telephone": S["tel_link"], "image": ALAN + "/images/og-gider-tikaniklik-acma.jpg",
+            "url": ALAN + "/", "telephone": S["tel_link"], "image": ALAN + "/images/og-cinar-dort-su-tesisatcisi.jpg",
             "logo": ALAN + "/images/favicon-512.png", "description": IC.TANITIM,
             "address": {"@type": "PostalAddress", **S["adres_sema"]},
             "geo": {"@type": "GeoCoordinates", "latitude": S["geo"][0], "longitude": S["geo"][1]},
@@ -660,7 +660,7 @@ def ilce_hizmet_sayfasi(i, h):
   <h2>{e(Y('{ad} 7/24 acil {kisa} servisi'))}</h2>
   {P(IM['acil'])}
   {P(Y(sec(ACIL_HAVUZ, s, hs, 'acil')))}
-  {servis_no(Y('{ad} acil {kisa} servis numarası'))}
+  {afis(Y('{ad} acil {kisa} servisi'), "afis-ic")}
  </section>
  <section class="blok">
   <h2>{e(Y("{ad}{dat} en yakın {kisa} servisi hangisi?"))}</h2>
@@ -725,7 +725,7 @@ def ilce_sayfasi(i):
   <h2>{e(i['ad'])} 7/24 Acil Tıkanıklık Açma Servisi</h2>
   {P(IM['gece'])}
   {P(IM['acil'])}
-  {servis_no(f"{i['ad']} 7/24 acil tıkanıklık açma servis numarası")}
+  {afis(f"{i['ad']} 7/24 acil tıkanıklık açma servisi", "afis-ic")}
  </section>
  <section class="blok">
   <h2>{e(ek(i))} hangi gider açma hizmetlerini veriyoruz?</h2>
@@ -800,7 +800,7 @@ def hizmet_sayfasi(h):
  <section class="blok">
   <h2>{e(Y('Anadolu Yakası 7/24 acil {kisa} servisi'))}</h2>
   <p>{e(Y('Anadolu yakasının 14 ilçesinde acil {kisa} için 7 gün 24 saat açığız. Gece, hafta sonu ya da bayram fark etmez; aradığınızda önce suyu nasıl durduracağınızı anlatıyor, sonra ekibi yola çıkarıyoruz.'))}</p>
-  {servis_no(Y('Anadolu Yakası acil {kisa} servis numarası'))}
+  {afis(Y('Anadolu Yakası acil {kisa} servisi'), "afis-ic")}
  </section>
  <section class="blok">
   <h2>{e(bel_h2)}</h2>
@@ -837,7 +837,7 @@ def kamera_sayfasi():
     govde = f"""
  <section class="blok"><h2>Kameralı tıkanıklık tespiti nedir?</h2>{P(K['giris'])}
   <p>Kamerayı tek başına bir hizmet olarak da, {hiz_bag} işlerinin içinde de kullanıyoruz.</p></section>
- <section class="blok"><h2>Kameralı tespit ne zaman gerekir?</h2>{h3_izgara(K['ne_zaman'], 'is-izgara is-3')}</section>
+ <section class="blok"><h2>Kameralı tespit ne zaman gerekir?</h2>{h3_izgara(K['ne_zaman'], 'is-izgara is-3')}{afis("Kameralı tıkanıklık tespiti", "afis-ic")}</section>
  {kamera_demo()}
  <section class="blok"><h2>Kamerada neler görüyoruz?</h2>{h3_izgara(K['neler'])}</section>
  <section class="blok fiyat-blok"><h2>Kameralı tespit fiyatı neye göre değişir?</h2>
@@ -981,10 +981,12 @@ def ana_hero():
  </div>
 </section>'''
 
-def afis():
-    """Kullanıcının afişi — tamamı tel: bağlantısı (kullanıcı 2026-10-07: "girişin biraz altına dikkat çekici, tıklanınca aranabilir")."""
-    alt = (S["isletme"] + ": tıkanan pimaşlarınızı kırmadan açmak için bizi arayın, yağlı pimaş hatlarını kırmadan yıkama. Telefon " + S["tel_goster"])
-    return (f'<a class="afis" href="tel:{S["tel_link"]}" aria-label="{e(S["isletme"])} — hemen ara: {S["tel_goster"]}">'
+def afis(on=None, sinif=""):
+    """Kullanıcının afişi — tamamı tel: bağlantısı (kullanıcı 2026-10-07: "girişin biraz altına dikkat çekici, tıklanınca aranabilir";
+    sonra "sitenin çeşitli yerlerine yay"). Sayfalarda servis_no kutusunun YERİNE konur → aynı ekranda iki ayrı ara düğmesi olmaz.
+    on: alt metnin başına eklenen bağlam (ilçe/hizmet) — banner alt metninde ilçe + hizmet + telefon olabilir (prompt 4.10)."""
+    alt = ((on + " — ") if on else "") + S["isletme"] + ": tıkanan pimaşlarınızı kırmadan açmak için bizi arayın, yağlı pimaş hatlarını kırmadan yıkama. Telefon " + S["tel_goster"]
+    return (f'<a class="afis{(" " + sinif) if sinif else ""}" href="tel:{S["tel_link"]}" aria-label="{e(S["isletme"])} — hemen ara: {S["tel_goster"]}">'
             f'{gorsel("cinar-dort-su-tesisatcisi-pimas-acma-afis", alt, boy="(min-width:1240px) 1168px, 100vw")}'
             f'<span class="afis-isik" aria-hidden="true"></span>'
             f'<span class="afis-rozet"><span class="afis-rozet-ik">{svg("tel")}</span>Dokun, hemen ara</span></a>')
@@ -1102,7 +1104,7 @@ def rehber_sayfasi(r):
  {''.join(govde)}
  <section class="blok kutu-vurgu"><h2>Uğraşmak istemiyorsanız</h2>
   <p>Evde denediniz ve olmadı, ya da hiç uğraşmak istemiyorsunuz; çok normal :) <a href="{ic(hiz_yolu(h))}">{e(h['hub_h1'])}</a> için 7/24 arayabilirsiniz. Kırmadan açıyor, fiyatı işe başlamadan söylüyoruz.</p>
-  {servis_no("7/24 acil tıkanıklık açma servis numarası")}</section>
+  {afis(r["h1"].split("?")[0], "afis-ic")}</section>
  {sss_html(r['sss'], "Sık sorulan sorular")}
  {rehber_kutu(diger, "Diğer rehber yazıları")}
 </div>
@@ -1119,7 +1121,8 @@ def rehber_ana():
                  "rehber/", "Tıkanıklık Rehberi", govde, "rehber")
 
 def hakkimizda():
-    k = "".join(f'<section class="blok"><h2>{e(b)}</h2>{"".join(P(x) for x in ps)}</section>' for b, ps in IC.HAKKIMIZDA)
+    k = "".join(f'<section class="blok"><h2>{e(b)}</h2>{"".join(P(x) for x in ps)}' + (afis("Hakkımızda", "afis-ic") if n == 0 else "") + '</section>'
+                for n, (b, ps) in enumerate(IC.HAKKIMIZDA))
     govde = (f'<div class="hakkimizda-g">{gorsel(D.SAHA_FOTO[1][0], D.SAHA_FOTO[1][1], boy="(min-width:980px) 420px, 100vw")}</div>'
              + k + yorumlar() + saha_galeri("Sahadan fotoğraflar") + usta_dikkat() + konum_blok())
     return basit(f"Hakkımızda | {S['isletme']} · Gider Tıkanıklık Açma",
@@ -1153,6 +1156,7 @@ def iletisim():
  <div class="ilt-kart">{svg('konum')}<div><h2>Adres</h2><p>{e(S['isletme'])}<br>{e(S['adres'])}</p><p><a href="{S['harita']}" target="_blank" rel="noopener">Haritada aç</a></p></div></div>
  <div class="ilt-kart">{svg('saat')}<div><h2>Çalışma saatleri</h2><p>7 gün 24 saat · <span class="durum-rozet durum-ic"><span class="canli"></span>şu an açık</span></p><p><a href="{ic('hizmet-bolgeleri/')}">Hizmet bölgeleri</a></p></div></div>
 </section>
+{afis("İletişim", "afis-ic")}
 <figure class="blok">{gorsel(D.SAHA_FOTO[0][0], D.SAHA_FOTO[0][1], boy="(min-width:980px) 760px, 100vw")}<figcaption>{e(D.SAHA_FOTO[0][1])}</figcaption></figure>
 {konum_blok()}"""
     return basit(f"İletişim | {S['isletme']} · {S['tel_goster']}",

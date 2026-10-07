@@ -689,3 +689,5 @@ p{margin:0 0 1em}
 .logo-ad b{letter-spacing:.04em}
 .logo-ad small{letter-spacing:.2em}
 @media (max-width:520px){.logo-isaret{width:38px;height:38px;border-radius:10px}}
+/* afiş sayfa içinde (servis numarası kutusunun yerine) */
+.afis-ic{margin:18px 0 4px}
