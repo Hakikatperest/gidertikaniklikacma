@@ -72,7 +72,16 @@ BOLGE_EK = ("'nda", "'na", "'nın", "'ndan")
 # ⚠️ Gerçek saha fotoğrafı YOK → galeri bölümleri basılmaz; ⏳ kullanıcıdan saha fotoğrafı bekleniyor.
 GORSEL = ("gider-tikaniklik-acma-kamerali-tespit",
           "Mutfak lavabosunun altında makaralı kamerayla gider hattını kontrol eden usta (temsilî görsel)")
-SAHA_FOTO = []   # ("dosya-tabani", "dürüst alt metin") — gerçek saha fotoğrafı gelince eklenir, galeri kendiliğinden açılır
+# 2026-10-07: kullanıcının gerçek fotoğrafları. ⛔ Alt metne ilçe adı YAZMA (nerede çekildiği bilinmiyor) — dükkân hariç
+# (GBP pini Sancaktepe ama dükkân fotoğrafının yeri teyitli değil → ilçe yazılmadı).
+SAHA_FOTO = [("cinar-dort-su-tesisatcisi-tabela", "Çınar Dört Su Tesisatçısı tabelası: tıkanan pimaşları kırmadan açma ve yağlı pimaş hattı yıkama"),
+             ("cinar-dort-su-tesisatcisi-dukkan", "Çınar 4 İnşaat nalbur dükkânının önünde Çınar Dört Su Tesisatçısı tabelası"),
+             ("su-kacagi-tespiti-noktasal-acma", "Cihazla bulunan su kaçağı için banyo zemininde yalnız kaçak noktasının açılması"),
+             ("su-kacagi-tamiri-ppr-boru", "Açılan noktada PPR su borusunun kaynak makinesiyle onarımı")]
+SU_FOTO = SAHA_FOTO[2:]
+VIDEO = {"dosya": "video/cihazla-kacak-su-tespiti.mp4", "kapak": "cihazla-kacak-su-tespiti-kapak",
+         "ad": "Cihazla kaçak su tespiti", "sure": "PT18S", "tarih": "2026-10-07",
+         "aciklama": "Banyo zemininde kaçak su dinleme cihazıyla su kaçağının yerinin aranması (18 saniye, dikey video)."}
 
 
 # ── Hizmetler (banner'daki 4 hizmet; her ilçede ayrı sayfa) ────────────────

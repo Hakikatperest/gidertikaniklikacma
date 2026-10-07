@@ -52,6 +52,7 @@ ILCE_SIRALI = sorted(D.ILCELER, key=tr_sira)
 
 def ilce_yolu(i, h=None): return f"{i['slug']}-{h['slug']}/" if h else f"{i['slug']}-tikaniklik-acma/"
 KAMERA_YOL = "kamerali-tikaniklik-tespiti/"
+SU_YOL = "su-kacagi-tespiti/"
 BOLGE = {"ad": "Anadolu Yakası", "slug": "_bolge"}
 def bek(hal="loc"): return "Anadolu Yakası" + D.BOLGE_EK[{"loc": 0, "dat": 1, "gen": 2, "abl": 3}[hal]]
 def sure(i=None):
@@ -180,6 +181,8 @@ def logo():
 def ust(aktif=""):
     hiz = "".join(f'<a{" class=aktif" if aktif == h["slug"] else ""} href="{ic(hiz_yolu(h))}">{svg(h["ikon"])}{e(h["ad"])}</a>'
                   for h in D.HIZMETLER)
+    hiz += (f'<a{" class=aktif" if aktif == "kamera" else ""} href="{ic(KAMERA_YOL)}">{svg("kamera")}Kameralı Tespit</a>'
+            f'<a{" class=aktif" if aktif == "su" else ""} href="{ic(SU_YOL)}">{svg("damla")}Su Kaçağı Tespiti</a>')
     ilc = "".join(f'<a href="{ic(ilce_yolu(i))}">{svg("konum")}{e(i["ad"])}</a>' for i in ILCE_SIRALI)
     return f"""<header class="ust{" koyu" if HERO_KOYU else ""}">
  <div class="kap ust-ic">
@@ -220,7 +223,7 @@ def w4_imza():
 
 def alt():
     hiz = "".join(f'<li><a href="{ic(hiz_yolu(h))}">{e(h["ad"])}</a></li>' for h in D.HIZMETLER)
-    hiz += f'<li><a href="{ic(KAMERA_YOL)}">Kameralı Tıkanıklık Tespiti</a></li>'
+    hiz += f'<li><a href="{ic(KAMERA_YOL)}">Kameralı Tıkanıklık Tespiti</a></li><li><a href="{ic(SU_YOL)}">Su Kaçağı Tespiti</a></li>'
     ilc = "".join(f'<li><a href="{ic(ilce_yolu(i))}">{e(i["ad"])} tıkanıklık açma</a></li>' for i in ILCE_SIRALI)
     reh = "".join(f'<li><a href="{ic(r["slug"] + "/")}">{e(r["h1"].split("?")[0])}?</a></li>' for r in IC.REHBER)
     return f"""</main>
@@ -758,7 +761,6 @@ def hizmet_sayfasi(h):
   {h3_izgara(h['isler'])}
   <p>Tıkanıklık sık tekrar ediyorsa sebebini <a href="{ic(KAMERA_YOL)}">kameralı tıkanıklık tespiti</a> ile buluyoruz.</p>
  </section>
- {saha_galeri(Y('{kisa}: sahadan fotoğraflar').capitalize())}
  {fiyat_faktor(Y('Anadolu Yakası {kisa} fiyatları ne kadar?'))}
  <section class="blok">
   <h2>{e(Y('Anadolu Yakası 7/24 acil {kisa} servisi'))}</h2>
@@ -810,11 +812,56 @@ def kamera_sayfasi():
  {sss_html(K['sss'], "Kameralı tespit: sık sorulan sorular")}"""
     return head("Kameralı Tıkanıklık Tespiti | Kırmadan Gider Görüntüleme · 7/24",
                 f"Makaralı kamerayla gider hattının içini görüp tıkanıklığın yerini ve sebebini kırmadan buluyoruz. Anadolu Yakası, 7/24. {S['tel_goster']}",
-                yol, sema) + ust() + hero("Anadolu Yakası · Kırmadan", "Kameralı Tıkanıklık Tespiti",
+                yol, sema) + ust("kamera") + hero("Anadolu Yakası · Kırmadan", "Kameralı Tıkanıklık Tespiti",
         "Tekrarlayan ya da sebebi anlaşılmayan tıkanıklıkta tahmin etmiyoruz: kamerayı hattın içine sürüp tıkanıklığın yerini ve sebebini birlikte görüyoruz.",
         ana_gorsel(oncelik=True), kir_html) + \
         f'\n<div class="kap">{guven()}</div>\n<div class="kap govde">{govde}\n</div>\n' + \
         cta("Tıkanıklığın sebebini görmek mi istiyorsunuz?", "7/24 arayabilir ya da WhatsApp'tan yazabilirsiniz.") + alt()
+
+def video_kart(baslik="Videoyu izleyin"):
+    V = D.VIDEO
+    kapak = f"images/{V['kapak']}-360.webp"
+    return (f'<div class="vid-kart" data-video="{ic(V["dosya"])}" data-poster="{ic(kapak)}">'
+            f'{gorsel(V["kapak"], V["aciklama"], boy="340px")}'
+            f'<button type="button" class="vid-ac" aria-label="{e(V["ad"])} videosunu oynat">'
+            f'<span class="vid-oynat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>'
+            f'<b>{e(baslik)}</b><small>18 sn · sesli</small></button></div>')
+
+def sema_video():
+    V = D.VIDEO
+    return {"@context": "https://schema.org", "@type": "VideoObject", "name": V["ad"], "description": V["aciklama"],
+            "thumbnailUrl": ALAN + f"/images/{V['kapak']}-360.webp", "uploadDate": V["tarih"], "duration": V["sure"],
+            "contentUrl": ALAN + "/" + V["dosya"], "inLanguage": "tr"}
+
+def su_kacagi_sayfasi():
+    K = IC.SU_KACAGI; yol = SU_YOL
+    kir_html, kir_ld = kirinti([("Anasayfa", ""), ("Su Kaçağı Tespiti", None)])
+    sema = [sema_hizmet("Su Kaçağı Tespiti", "Cihazla su kaçağı tespiti", None, yol), sema_sss(K["sss"]), sema_video(), kir_ld]
+    ilce_bag = ", ".join(f'<a href="{ic(ilce_yolu(i))}">{e(i["ad"])}</a>' for i in ILCE_SIRALI)
+    govde = f"""
+ <section class="blok"><h2>Su kaçağı tespiti nasıl yapılır?</h2>{P(K['giris'])}
+  <div class="vid-izgara">{video_kart("Cihazla kaçak su tespiti")}
+   <div>{h3_izgara(K['yontem'])}</div></div></section>
+ <section class="blok"><h2>Su kaçağı olduğunu nasıl anlarsınız?</h2>
+  <ul class="tik-liste">{''.join(f'<li>{svg("tik")}<span>{e(b)}</span></li>' for b in K['belirti'])}</ul></section>
+ <section class="blok kutu-vurgu"><h2>Su sayacıyla kaçak kontrolü: evde kendiniz yapın</h2>
+  <ol class="adim-liste">{''.join(f'<li>{e(o)}</li>' for o in K['sayac'])}</ol></section>
+ {galeri(D.SU_FOTO, "Sahadan: kaçak noktasını açma ve boru onarımı")}
+ <section class="blok"><h2>Su kaçağı İSKİ'nin mi, sizin mi sorumluluğunuzda?</h2>{P(K['sorumluluk'])}</section>
+ <section class="blok kutu-uyari"><h2>{svg('uyari')} Tavandan su damlıyorsa ne yapmalısınız?</h2>{P(K['acil'])}
+  {servis_no("7/24 su kaçağı ve tıkanıklık servis numarası")}</section>
+ <section class="blok fiyat-blok"><h2>Su kaçağı tespiti fiyatı neye göre değişir?</h2>
+  <p class="blok-giris">{e(FIYAT_KISA)}</p>{h3_izgara(K['fiyat'], 'is-izgara is-3')}</section>
+ <section class="blok"><h2>Hangi ilçelerde su kaçağı tespiti yapıyoruz?</h2>
+  <p>Anadolu yakasının 14 ilçesinde: {ilce_bag}. {e(sure())} Giderleriniz de tıkalıysa <a href="{ic(KAMERA_YOL)}">kameralı tıkanıklık tespiti</a> ve <a href="{ic(hiz_yolu(HIZ['banyo-gideri-acma']))}">banyo gideri açma</a> sayfalarımıza bakabilirsiniz.</p></section>
+ {sss_html(K['sss'], "Su kaçağı tespiti: sık sorulan sorular")}"""
+    return head("Su Kaçağı Tespiti | Cihazla Kaçak Su Bulma · Anadolu Yakası",
+                f"Su kaçağının yerini cihazla dinleyerek buluyor, yalnız o noktayı açıp boruyu onarıyoruz. Anadolu Yakası, 7/24. {S['tel_goster']}",
+                yol, sema) + ust("su") + hero("Anadolu Yakası · 7/24", "Su Kaçağı Tespiti",
+        "Kaçağın yerini cihazla dinleyerek buluyor, bütün zemini kırmadan yalnızca kaçağın olduğu noktayı açıp boruyu onarıyoruz. Fiyatı işe başlamadan söylüyoruz.",
+        gorsel("su-kacagi-tespiti-noktasal-acma", D.SU_FOTO[0][1], oncelik=True), kir_html) + \
+        f'\n<div class="kap">{guven()}</div>\n<div class="kap govde">{govde}\n</div>\n' + \
+        cta("Su kaçağından mı şüpheleniyorsunuz?", "7/24 arayabilir ya da WhatsApp'tan fotoğraf, video gönderebilirsiniz.") + alt()
 
 # ── anasayfa ────────────────────────────────────────────────────────────────
 ANA_SSS = [
@@ -878,7 +925,8 @@ def anasayfa():
  </section>
  <section class="blok"><p class="bolum-ust">Hizmetlerimiz</p><h2>Anadolu Yakası'nda hangi tıkanıklık açma hizmetlerini veriyoruz?</h2>
   <p class="blok-giris">Her hizmetin ilçenize özel sayfasında o bölgedeki binalarda en sık karşılaştığımız durumları da anlattık.</p>
-  <div class="hkart-izgara">{kartlar}</div></section>
+  <div class="hkart-izgara">{kartlar}</div>
+  <p>Tıkanıklığın yanında <a href="{ic(SU_YOL)}">su kaçağı tespiti</a> de yapıyoruz: kaçağın yerini cihazla dinleyip yalnızca o noktayı açıyoruz.</p></section>
  <section class="blok"><p class="bolum-ust">Hakkımızda</p><h2>Neden {e(S['isletme'])}?</h2>
   {P(IC.TANITIM)}
   {h3_izgara(neden_biz)}
@@ -973,8 +1021,8 @@ def rehber_ana():
 
 def hakkimizda():
     k = "".join(f'<section class="blok"><h2>{e(b)}</h2>{"".join(P(x) for x in ps)}</section>' for b, ps in IC.HAKKIMIZDA)
-    govde = (f'<div class="hakkimizda-g">{ana_gorsel(boy="(min-width:980px) 420px, 100vw")}</div>'
-             + k + usta_dikkat() + konum_blok())
+    govde = (f'<div class="hakkimizda-g">{gorsel(D.SAHA_FOTO[1][0], D.SAHA_FOTO[1][1], boy="(min-width:980px) 420px, 100vw")}</div>'
+             + k + saha_galeri("Sahadan fotoğraflar") + usta_dikkat() + konum_blok())
     return basit(f"Hakkımızda | {S['isletme']} · Gider Tıkanıklık Açma",
                  f"{S['isletme']}: Anadolu Yakası'nın 14 ilçesinde kırmadan, kameralı tespitle tıkanıklık açma. 7/24, fiyat işe başlamadan söylenir.",
                  "hakkimizda/", "Hakkımızda", govde, "hakkimizda")
@@ -1006,6 +1054,7 @@ def iletisim():
  <div class="ilt-kart">{svg('konum')}<div><h2>Google Haritalar</h2><p>{e(S['isletme'])} · {e(S['konum_ilce'])}, İstanbul</p><p><a href="{S['harita']}" target="_blank" rel="noopener">Haritada aç</a></p></div></div>
  <div class="ilt-kart">{svg('saat')}<div><h2>Çalışma saatleri</h2><p>7 gün 24 saat · <span class="durum-rozet durum-ic"><span class="canli"></span>şu an açık</span></p><p><a href="{ic('hizmet-bolgeleri/')}">Hizmet bölgeleri</a></p></div></div>
 </section>
+<figure class="blok">{gorsel(D.SAHA_FOTO[0][0], D.SAHA_FOTO[0][1], boy="(min-width:980px) 760px, 100vw")}<figcaption>{e(D.SAHA_FOTO[0][1])}</figcaption></figure>
 {konum_blok()}"""
     return basit(f"İletişim | {S['isletme']} · {S['tel_goster']}",
                  f"{S['isletme']} (Gider Tıkanıklık Açma) iletişim: {S['tel_goster']}, WhatsApp, 7/24. Anadolu Yakası 14 ilçe.",
@@ -1047,7 +1096,7 @@ def temizle():
     """Önceki üretimden kalan sayfa klasörlerini sil (yalnızca index.html içerenler)."""
     for ad in os.listdir(KOK):
         tam = os.path.join(KOK, ad)
-        if os.path.isdir(tam) and ad not in {"assets", "images", "_src", ".git"} and os.path.isfile(os.path.join(tam, "index.html")):
+        if os.path.isdir(tam) and ad not in {"assets", "images", "video", "_src", ".git"} and os.path.isfile(os.path.join(tam, "index.html")):
             shutil.rmtree(tam)
 
 def main():
@@ -1056,6 +1105,7 @@ def main():
     yollar = [sayfa("", anasayfa)]
     for h in D.HIZMETLER: yollar.append(sayfa(hiz_yolu(h), hizmet_sayfasi, h))
     yollar.append(sayfa(KAMERA_YOL, kamera_sayfasi))
+    yollar.append(sayfa(SU_YOL, su_kacagi_sayfasi))
     for i in ILCE_SIRALI:
         yollar.append(sayfa(ilce_yolu(i), ilce_sayfasi, i))
         for h in D.HIZMETLER: yollar.append(sayfa(ilce_yolu(i, h), ilce_hizmet_sayfasi, i, h))

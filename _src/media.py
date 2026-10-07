@@ -14,6 +14,13 @@ CIKTI = os.path.join(KOK, "images")
 # kaynak dosya → (yayın tabanı, kırpma kutusu (x0,y0,x1,y1) ya da None, genişlikler)
 GORSELLER = {
  "banner-orijinal.webp": ("gider-tikaniklik-acma-kamerali-tespit", (890, 0, 1639, 960), (480, 749)),
+ # 2026-10-07 kullanıcının GERÇEK saha fotoğrafları (GitHub'a yükledi)
+ # ⚠️ tabela fotoğrafının sağ üstünde BAŞKA firmanın aracı + telefonu görünüyor → yalnız tabela kırpılır
+ "cinar-dort-su-tesisatcisi.webp": ("cinar-dort-su-tesisatcisi-tabela", (60, 140, 1050, 712), (640, 990)),
+ "cinar-su-tesisatcisi.webp":      ("cinar-dort-su-tesisatcisi-dukkan", None, (480, 960, 1360)),
+ "su-kacak-tespiti.webp":          ("su-kacagi-tespiti-noktasal-acma", None, (480, 766)),
+ "su-tesisatcisi.webp":            ("su-kacagi-tamiri-ppr-boru", None, (480, 766)),
+ "video-poster.jpg":               ("cihazla-kacak-su-tespiti-kapak", None, (360,)),
 }
 # saha fotoğrafları gelince: "dosya.webp": ("anahtar-kelimeli-taban", None, (480, 960))
 
@@ -24,6 +31,7 @@ def kaydet(k, taban, g):
 def turev():
     os.makedirs(CIKTI, exist_ok=True)
     for ad, (taban, kutu, genler) in GORSELLER.items():
+        if not os.path.exists(os.path.join(KAYNAK, ad)): continue
         im = Image.open(os.path.join(KAYNAK, ad)).convert("RGB")
         if kutu: im = im.crop(kutu)
         for g in genler:

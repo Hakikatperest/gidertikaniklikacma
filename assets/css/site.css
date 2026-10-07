@@ -634,3 +634,14 @@ p{margin:0 0 1em}
 .hkart-gorselsiz .hkart-b{margin-top:6px}
 .alt-iki{columns:2;column-gap:18px}
 .alt-iki li{break-inside:avoid}
+/* video facade — dikey (9:16) saha videosu. ⚠️ <video>'ya height verme, aspect-ratio'yu ezer */
+.vid-izgara{display:grid;grid-template-columns:minmax(0,340px) 1fr;gap:28px;align-items:center}
+.vid-kart{position:relative;aspect-ratio:9/16;max-width:340px;width:100%;border-radius:var(--r);overflow:hidden;background:#0B1424;box-shadow:var(--golge)}
+.vid-kart img,.vid-kart video{width:100%;height:100%;object-fit:cover;display:block}
+.vid-ac{position:absolute;inset:0;border:0;padding:0;background:transparent;cursor:pointer;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:6px;padding-bottom:22px;font:inherit}
+.vid-ac::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,11,20,0) 45%,rgba(6,11,20,.82))}
+.vid-oynat{position:absolute;top:50%;left:50%;width:68px;height:68px;margin:-34px 0 0 -34px;border-radius:50%;background:rgba(10,143,214,.92);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px -8px rgba(10,143,214,.8)}
+.vid-oynat svg{width:28px;height:28px;fill:#fff;margin-left:4px}
+.vid-ac b,.vid-ac small{position:relative}
+.vid-ac b{font-size:1rem}.vid-ac small{opacity:.85;font-size:.8rem}
+@media (max-width:760px){.vid-izgara{grid-template-columns:1fr}.vid-kart{margin:0 auto}}

@@ -85,6 +85,18 @@
     });
   });
 
+  // video: tıklanana kadar <video> DOM'a girmez (sayfa yükünü hafif tutar); kapak görseli + oynat düğmesi
+  [].forEach.call(document.querySelectorAll('[data-video]'), function (k) {
+    var b = k.querySelector('.vid-ac');
+    if (!b) return;
+    b.addEventListener('click', function () {
+      var v = document.createElement('video');
+      v.src = k.getAttribute('data-video'); v.controls = true; v.autoplay = true; v.playsInline = true;
+      v.setAttribute('playsinline', ''); v.poster = k.getAttribute('data-poster') || '';
+      k.innerHTML = ''; k.appendChild(v); var p = v.play(); if (p && p.catch) p.catch(function () {});
+    });
+  });
+
   // ilçe kartı ↔ şematik harita vurgusu
   [].forEach.call(document.querySelectorAll('.ikart[data-ilce]'), function (kart) {
     var hb = document.querySelector('.hb[data-ilce="' + kart.getAttribute('data-ilce') + '"]');

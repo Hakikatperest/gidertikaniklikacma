@@ -563,7 +563,7 @@ FIYAT_SOZ = ("Fiyatı usta yerinde gördükten sonra, işe başlamadan söylüyo
 
 HAKKIMIZDA = [
  ("Biz kimiz?", [TANITIM,
-   "Bu site, Çınar Dört Su Tesisatçısı'nın gider ve tıkanıklık açma hizmetini anlattığımız sitedir. Google Haritalar'da da bu adla bulunuyoruz; konumumuz Sancaktepe'de. Burada yalnız tıkanıklık işini anlattık: hangi giderin neden tıkandığını, nasıl açtığımızı ve evde neleri kendiniz deneyebileceğinizi."]),
+   "Bu site, Çınar Dört Su Tesisatçısı'nın gider ve tıkanıklık açma hizmetini anlattığımız sitedir. Google Haritalar'da da bu adla bulunuyoruz; konumumuz Sancaktepe'de. Burada tıkanıklık ve su kaçağı işini anlattık: hangi giderin neden tıkandığını, nasıl açtığımızı, kaçağı nasıl bulduğumuzu ve evde neleri kendiniz deneyebileceğinizi."]),
  ("Nasıl çalışıyoruz?", [
    "Arıyorsunuz ya da WhatsApp'tan yazıyorsunuz; mümkünse sorunun kısa bir videosunu atıyorsunuz. Videoya bakıp hangi makineyle geleceğimize karar veriyoruz. Anadolu yakasında adrese ortalama 30 dakikada ulaşıyoruz; Adalar ve Şile gibi uzak noktalarda süreyi arayınca açıkça söylüyoruz.",
    "Usta önce sorunun yerini buluyor: klozet mi, lavabo sifonu mu, duş gideri mi, mutfak kolonu mu? Gerekiyorsa kamerayı hattın içine sürüp tıkanıklığı ekranda birlikte görüyoruz. Fiyatı işe başlamadan söylüyor, onayınızı aldıktan sonra kırmadan açıyoruz."]),
@@ -792,3 +792,44 @@ USTA_DIKKAT = [
  ("Ulaşabileceğiniz birini seçin", "Sorun tekrar ederse yeniden ulaşabileceğiniz, telefonu açılan ve size ne yaptığını anlatan biriyle çalışın."),
  ("Akışı birlikte test edin", "İş bitince suyu birlikte akıtın; suyun gittiğini kendi gözünüzle görmeden işi bitmiş saymayın."),
 ]
+
+# ── Su kaçağı tespiti (tek sayfa; ilçe sürümü YOK) ─────────────────────────
+# 2026-10-07: kullanıcı gerçek fotoğraf + video yükledi (cihazla tespit, noktasal açma, PPR onarım).
+# ⛔ Fotoğrafta görünmeyen yöntem iddia etme (termal kamera, gaz yöntemi vb. YAZILMADI). ⛔ "kırmadan" DEME: su kaçağında
+#    kaçak noktası açılıyor (fotoğrafta görünüyor) → doğru ifade "yalnız kaçağın olduğu noktayı açıyoruz".
+SU_KACAGI = {
+ "giris": "Su kaçağı tıkanıklık gibi kendini hemen göstermez. Duvarda bir nem lekesi, alt kattan gelen bir şikâyet ya da bir anda kabaran su faturası… Kaçağın tam yerini bilmeden fayansları sırayla kırmak hem pahalı hem gereksiz. Biz önce cihazla dinleyip kaçağın yerini buluyor, sonra yalnızca o noktayı açıyoruz.",
+ "belirti": [
+  "Bütün musluklar kapalıyken su sayacı dönmeye devam ediyor",
+  "Su faturası kullanımınız değişmediği hâlde arttı",
+  "Duvarda, tavanda ya da süpürgelik hizasında nem ve kabarma var",
+  "Alt kattaki komşunun tavanında lekelenme başladı",
+  "Banyo ya da mutfak zemininde fayans derzleri sürekli ıslak",
+  "Kombinin basıncı sık sık düşüyor (ısıtma tesisatında kaçak olabilir)",
+ ],
+ "sayac": [
+  "Evdeki bütün muslukları, rezervuarları, çamaşır ve bulaşık makinesini kapatın.",
+  "Su sayacının üzerindeki küçük yıldız ya da çark şeklindeki göstergeye bakın.",
+  "Gösterge hiç su kullanılmadığı hâlde dönüyorsa sayaçtan sonraki tesisatta bir kaçak var demektir.",
+  "Emin olmak için sayaçtaki rakamı not edin, bir iki saat hiç su kullanmadan bekleyip yeniden bakın.",
+ ],
+ "yontem": [
+  ("Önce dinliyoruz", "Kaçak su dinleme cihazının algılayıcısını zemine ve duvara yerleştirip borudan kaçan suyun sesini dinliyoruz. Ses en güçlü olduğu noktada kaçağa en yakın yerdeyiz demektir."),
+  ("Noktayı işaretliyoruz", "Algılayıcıyı adım adım kaydırıp sesin en net geldiği noktayı buluyor ve işaretliyoruz. Açılacak yeri size bu noktada gösteriyoruz."),
+  ("Yalnız o noktayı açıyoruz", "Bütün banyoyu ya da koridoru kırmıyoruz; işaretlediğimiz noktada küçük bir alan açıp boruya ulaşıyoruz."),
+  ("Boruyu onarıyoruz", "Kaçak yapan bölümü kesip yeni parçayı PPR kaynak makinesiyle yerine kaynatıyoruz. Ardından hattı basınç altında deneyip kaçağın kesildiğini birlikte görüyoruz."),
+ ],
+ "sorumluluk": "İstanbul'da su sayacına kadar olan şebeke hattı İSKİ'nin, sayaçtan sonraki tesisat abonenin sorumluluğundadır. Sayaç dönmüyor ama sokakta su akıyorsa ya da sayaçtan önce bir kaçak görüyorsanız İSKİ'yi ALO 185'ten arayın; sayaç musluklar kapalıyken dönüyorsa kaçak evinizin içindedir ve bizi arayabilirsiniz.",
+ "acil": "Tavandan su damlıyor ya da zeminden su çıkıyorsa önce sayacın yanındaki ana vanayı kapatın; vana kapanınca kaçak da durur. Elektrik prizlerine ya da aydınlatmaya su geliyorsa sigortayı da kapatın. Sonra bizi arayın; 7 gün 24 saat açığız.",
+ "fiyat": [
+  ("Kaçağın yeri", "Banyo zeminindeki bir boru ile duvar içinden geçen uzun bir hat aynı iş değildir."),
+  ("Açılacak alan", "Kaçağın derinliği ve üzerindeki zemin türü, açma ve kapatma işinin süresini etkiler."),
+  ("Onarım", "Tek bir bağlantının değişmesi ile bozulmuş bir boru bölümünün yenilenmesi farklı emek ister."),
+ ],
+ "sss": [
+  ("Su kaçağı kırmadan bulunur mu?", "Kaçağın yerini kırmadan, cihazla dinleyerek buluyoruz. Boruyu onarmak için ise o noktayı açmak gerekir; biz yalnızca kaçağın olduğu küçük alanı açıyoruz."),
+  ("Su kaçağı olup olmadığını nasıl anlarım?", "Bütün muslukları kapatıp su sayacına bakın. Hiç su kullanılmadığı hâlde sayacın küçük göstergesi dönüyorsa sayaçtan sonraki tesisatta bir kaçak var demektir."),
+  ("Su kaçağı İSKİ'nin mi sorumluluğunda?", "Sayaca kadar olan hat İSKİ'nin, sayaçtan sonraki tesisat abonenin sorumluluğundadır. Ev içindeki kaçak için İSKİ ekip göndermez."),
+  ("Fiyatı ne zaman öğrenirim?", "Kaçağın yerini bulup ne kadar alanın açılacağını gördükten sonra, işe başlamadan söylüyoruz; onayınız olmadan açmıyoruz."),
+ ],
+}
