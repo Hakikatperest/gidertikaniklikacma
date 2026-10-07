@@ -821,6 +821,13 @@ SU_KACAGI = {
  ],
  "sorumluluk": "İstanbul'da su sayacına kadar olan şebeke hattı İSKİ'nin, sayaçtan sonraki tesisat abonenin sorumluluğundadır. Sayaç dönmüyor ama sokakta su akıyorsa ya da sayaçtan önce bir kaçak görüyorsanız İSKİ'yi ALO 185'ten arayın; sayaç musluklar kapalıyken dönüyorsa kaçak evinizin içindedir ve bizi arayabilirsiniz.",
  "acil": "Tavandan su damlıyor ya da zeminden su çıkıyorsa önce sayacın yanındaki ana vanayı kapatın; vana kapanınca kaçak da durur. Elektrik prizlerine ya da aydınlatmaya su geliyorsa sigortayı da kapatın. Sonra bizi arayın; 7 gün 24 saat açığız.",
+ "gizli": "Gizli su kaçağı, gözle göremediğiniz bir yerde, yani duvarın, zeminin ya da tavanın içinden geçen boruda olur. Sayaç döner, fatura artar ama ortada su yoktur; ya da su, kaçağın olduğu yerden metrelerce uzakta bir lekede ortaya çıkar. Bu yüzden lekenin olduğu yeri kırmak çoğu zaman yanlış yeri kırmak demektir. Önce dinleyip kaçağın gerçek yerini buluyoruz.",
+ "sizinti": [
+  ("Lavabo altı sızıntı", "Lavabonun altındaki dolapta ıslaklık varsa sebep çoğu zaman sifon contası, gevşeyen bağlantı ya da ara musluk ile batarya arasındaki fleks hortumdur. Bunlar kırma gerektirmez; parçayı değiştirip sıkılığını deniyoruz."),
+  ("Klozet altı su kaçağı", "Klozetin dibinde biriken su ya klozet ile gider arasındaki contadan ya da rezervuarın bağlantısından gelir. Hangisi olduğunu ayırıp contayı ya da bağlantıyı yeniliyoruz."),
+  ("Musluk sızıntısı", "Musluğun gövdesinden ya da altından sızan su, iç parçanın ya da bağlantının yorulduğunu gösterir. Yerinde bakıp parçayı ya da musluğu değiştiriyoruz."),
+ ],
+ "patlak": "Sıcak su borusu ya da soğuk su borusu patladığında ilk iş sayacın yanındaki ana vanayı kapatmak. Sıcak su hattıysa kombiyi de kapatın. Biz geldiğimizde patlağın yerini buluyor, o noktayı açıp patlayan bölümü kesiyor ve yeni boru parçasını PPR kaynak makinesiyle yerine kaynatıyoruz. Ardından hattı basınç altında deneyip suyu birlikte açıyoruz.",
  "fiyat": [
   ("Kaçağın yeri", "Banyo zeminindeki bir boru ile duvar içinden geçen uzun bir hat aynı iş değildir."),
   ("Açılacak alan", "Kaçağın derinliği ve üzerindeki zemin türü, açma ve kapatma işinin süresini etkiler."),
@@ -831,5 +838,42 @@ SU_KACAGI = {
   ("Su kaçağı olup olmadığını nasıl anlarım?", "Bütün muslukları kapatıp su sayacına bakın. Hiç su kullanılmadığı hâlde sayacın küçük göstergesi dönüyorsa sayaçtan sonraki tesisatta bir kaçak var demektir."),
   ("Su kaçağı İSKİ'nin mi sorumluluğunda?", "Sayaca kadar olan hat İSKİ'nin, sayaçtan sonraki tesisat abonenin sorumluluğundadır. Ev içindeki kaçak için İSKİ ekip göndermez."),
   ("Fiyatı ne zaman öğrenirim?", "Kaçağın yerini bulup ne kadar alanın açılacağını gördükten sonra, işe başlamadan söylüyoruz; onayınız olmadan açmıyoruz."),
+ ],
+}
+
+# ── Acil su tesisatçısı (tek sayfa; ilçe sürümü YOK) ───────────────────────
+# 2026-10-07: kullanıcının niş kelime listesinden (musluk, batarya, rezervuar, boru patladı, acil/gece tesisatçı).
+# ⛔ YALNIZ KANITLI işler: Google yorumlarında geçen (musluk montajı, klozet montajı, iç takım değişikliği, gömme rezervuar akıntısı,
+#    sıcak su sorunu) + PPR boru onarım fotoğrafı. Kombi, su sayacı, tesisat yenileme, çatı/oluk YAZILMADI.
+SU_TESISAT = {
+ "giris": "Tıkanıklığın yanında su tesisatının günlük arızalarına da geliyoruz: damlatan musluk, su akıtan rezervuar, sızdıran bağlantı, patlayan boru. Aracımızda ekipmanla adresinize geliyor, sorunu yerinde görüp fiyatı işe başlamadan söylüyoruz. Gece, pazar günü ve bayramda da açığız.",
+ "isler": [
+  ("Musluk ve batarya değişimi", "Damlatan, sızdıran ya da eskiyen lavabo, evye ve duş bataryasını söküp yenisini takıyoruz. Bazen musluğun tamamını değil yalnız iç parçasını değiştirmek yeter; yerinde bakıp söylüyoruz."),
+  ("Rezervuar ve klozet iç takımı", "Rezervuar sürekli su akıtıyor, sifon düğmesi basmıyor ya da su kesilmiyorsa sorun iç takımdadır. Gömme ve dış rezervuarın iç takımını değiştiriyoruz."),
+  ("Klozet montajı", "Yeni klozeti yerine oturtuyor, gider ve su bağlantısını yapıp sızdırmazlığını deniyoruz."),
+  ("Boru patlağı ve sızıntı", "Patlayan ya da sızdıran sıcak ve soğuk su borusunun yalnız sorunlu noktasını açıp yeni parçayı PPR kaynak makinesiyle kaynatıyoruz."),
+  ("Su kaçağı tespiti", "Sayaç dönüyor ama su görünmüyorsa kaçağın yerini cihazla dinleyerek buluyoruz. [[su-kacagi-tespiti/|Su kaçağı tespiti]] sayfamızda anlattık."),
+  ("Tıkanıklık açma", "Tuvalet, lavabo, banyo ve mutfak gideri tıkanıklığını kırmadan, makineyle açıyoruz."),
+ ],
+ "musluk": "Musluk damlatıyorsa önce lavabonun ya da evyenin altındaki ara musluğu kapatın; damlama hemen durur ve acele etmenize gerek kalmaz. Damlamanın sebebi çoğu zaman musluğun içindeki parçanın yorulmasıdır. Geldiğimizde musluğa bakıp iç parçayı mı yoksa bataryanın tamamını mı değiştirmek gerektiğini söylüyor, fiyatı işe başlamadan veriyoruz.",
+ "rezervuar": "Rezervuarın suyu klozete sürekli akıyorsa ya da rezervuar dolup durmuyorsa şamandıra ya da sifon mekanizması arızalıdır. Gömme rezervuarda bu parçalar duvardaki kapağın arkasındadır; kapağı söküp iç takımı değiştiriyoruz. Bu arada rezervuarın ara musluğunu kapatırsanız boşa akan su durur.",
+ "su_gelmiyor": [
+  ("Önce ana vanaya ve sayaca bakın", "Ana vana kapalı kalmış olabilir. Sayaç ve vana açıksa ve bütün evde su yoksa sebep bina ya da şebeke tarafındadır."),
+  ("Şebeke kesintisi mi?", "Bütün sokakta su yoksa planlı ya da arıza kaynaklı bir kesinti olabilir. İSKİ'yi ALO 185'ten arayıp sorabilirsiniz; bu durumda tesisatçı çağırmanız gerekmez."),
+  ("Yalnız bir muslukta su yoksa", "Sorun o musluğun ara vanasında, filtresinde ya da iç parçasındadır; bu bizim işimiz."),
+  ("Yalnız sıcak su gelmiyorsa", "Kombinin kendisindeki arıza kombi servisinin işidir. Sıcak su hattındaki sızıntı, patlak ya da tıkalı bağlantı için bizi arayabilirsiniz."),
+ ],
+ "yerler": [
+  ("Ev ve daire", "Daire içindeki musluk, rezervuar, bağlantı ve boru arızalarına geliyoruz."),
+  ("Apartman", "Ortak kolon, bodrum kat gideri ve bina bağlantısı gibi apartmanın ortak tesisatında yönetimle birlikte çalışıyoruz."),
+  ("Site", "Sitelerde blok ve ortak hat arızalarında site yönetiminin bilgisiyle çalışıyoruz."),
+  ("İş yeri", "Dükkân, ofis, kafe ve restoranlarda iş saatini aksatmamak için çalışma saatini sizinle planlıyoruz."),
+ ],
+ "sss": [
+  ("Gece ya da pazar günü tesisatçı geliyor mu?", "Evet. 7 gün 24 saat açığız; gece yarısı, sabah erken, pazar günü ve bayramda da arayabilirsiniz."),
+  ("Musluk damlatıyorsa ne yapmalıyım?", "Lavabonun ya da evyenin altındaki ara musluğu kapatın, damlama durur. Sonra bizi arayın; iç parçayı mı bataryayı mı değiştirmek gerektiğini yerinde söylüyoruz."),
+  ("Rezervuar sürekli su akıtıyor, ne yapmalıyım?", "Rezervuarın ara musluğunu kapatın. Sorun çoğu zaman şamandıra ya da sifon mekanizmasındadır; gömme ve dış rezervuarın iç takımını değiştiriyoruz."),
+  ("Su gelmiyorsa tesisatçı mı çağırmalıyım?", "Önce ana vanaya bakın ve sokakta kesinti olup olmadığını İSKİ ALO 185'ten öğrenin. Yalnız sizin evinizde ya da tek bir muslukta su yoksa bizi arayın."),
+  ("Fiyatı ne zaman öğrenirim?", "Usta sorunu yerinde gördükten sonra, işe başlamadan fiyatı söylüyor; onayınız olmadan işe başlamıyoruz."),
  ],
 }

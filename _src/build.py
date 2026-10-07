@@ -53,6 +53,7 @@ ILCE_SIRALI = sorted(D.ILCELER, key=tr_sira)
 def ilce_yolu(i, h=None): return f"{i['slug']}-{h['slug']}/" if h else f"{i['slug']}-tikaniklik-acma/"
 KAMERA_YOL = "kamerali-tikaniklik-tespiti/"
 SU_YOL = "su-kacagi-tespiti/"
+SUT_YOL = "acil-su-tesisatcisi/"
 BOLGE = {"ad": "Anadolu Yakası", "slug": "_bolge"}
 def bek(hal="loc"): return "Anadolu Yakası" + D.BOLGE_EK[{"loc": 0, "dat": 1, "gen": 2, "abl": 3}[hal]]
 def sure(i=None):
@@ -185,7 +186,8 @@ def ust(aktif=""):
     hiz = "".join(f'<a{" class=aktif" if aktif == h["slug"] else ""} href="{ic(hiz_yolu(h))}">{svg(h["ikon"])}{e(h["ad"])}</a>'
                   for h in D.HIZMETLER)
     hiz += (f'<a{" class=aktif" if aktif == "kamera" else ""} href="{ic(KAMERA_YOL)}">{svg("kamera")}Kameralı Tespit</a>'
-            f'<a{" class=aktif" if aktif == "su" else ""} href="{ic(SU_YOL)}">{svg("damla")}Su Kaçağı Tespiti</a>')
+            f'<a{" class=aktif" if aktif == "su" else ""} href="{ic(SU_YOL)}">{svg("damla")}Su Kaçağı Tespiti</a>'
+            f'<a{" class=aktif" if aktif == "sut" else ""} href="{ic(SUT_YOL)}">{svg("anahtar")}Acil Su Tesisatçısı</a>')
     ilc = "".join(f'<a href="{ic(ilce_yolu(i))}">{svg("konum")}{e(i["ad"])}</a>' for i in ILCE_SIRALI)
     return f"""<header class="ust{" koyu" if HERO_KOYU else ""}">
  <div class="kap ust-ic">
@@ -226,7 +228,7 @@ def w4_imza():
 
 def alt():
     hiz = "".join(f'<li><a href="{ic(hiz_yolu(h))}">{e(h["ad"])}</a></li>' for h in D.HIZMETLER)
-    hiz += f'<li><a href="{ic(KAMERA_YOL)}">Kameralı Tıkanıklık Tespiti</a></li><li><a href="{ic(SU_YOL)}">Su Kaçağı Tespiti</a></li>'
+    hiz += f'<li><a href="{ic(KAMERA_YOL)}">Kameralı Tıkanıklık Tespiti</a></li><li><a href="{ic(SU_YOL)}">Su Kaçağı Tespiti</a></li><li><a href="{ic(SUT_YOL)}">Acil Su Tesisatçısı</a></li>'
     ilc = "".join(f'<li><a href="{ic(ilce_yolu(i))}">{e(i["ad"])} tıkanıklık açma</a></li>' for i in ILCE_SIRALI)
     reh = "".join(f'<li><a href="{ic(r["slug"] + "/")}">{e(r["h1"].split("?")[0])}?</a></li>' for r in IC.REHBER)
     return f"""</main>
@@ -410,7 +412,7 @@ def uzmanlik():
              ("Sonraki müdahaleyi zorlaştırır", "Giderde bekleyen kimyasal, makineyle açarken geri sıçrayabilir. Kimyasal kullandıysanız ustaya mutlaka söyleyin.")]
     return f"""<section class="blok"><p class="bolum-ust">Bilmekte fayda var</p><h2>Gider neden tıkanır?</h2>
   <div class="is-izgara is-3">{''.join(f'<div class="is"><h3>{e(a)}</h3><p>{e(m)}</p></div>' for a, m in neden)}</div></section>
- <section class="blok kutu-uyari"><h2>{svg('uyari')} Kimyasal gider açıcıyı neden önermiyoruz?</h2>
+ <section class="blok kutu-uyari"><h2>{svg('uyari')} Kimyasal kullanmadan tıkanıklık açma: kimyasalı neden önermiyoruz?</h2>
   <div class="is-izgara">{''.join(f'<div class="is is-sade"><h3>{e(a)}</h3><p>{e(m)}</p></div>' for a, m in kimya)}</div></section>"""
 
 def fiyat_faktor(baslik="Gider tıkanıklık açma fiyatları ne kadar?"):
@@ -447,7 +449,7 @@ def kisa_ad(ad):
     if len(p) == 1: return p[0] if p[0].isupper() and len(p[0]) <= 3 else buyuk(p[0])
     return f"{buyuk(p[0])} {buyuk(p[-1])[0]}."
 
-def yorumlar(konu=None, baslik="Müşterilerimiz ne diyor?", ust="Google yorumları"):
+def yorumlar(konu=None, baslik="Tıkanıklık açma ve tesisat yorumları: müşterilerimiz ne diyor?", ust="Google yorumları"):
     """⛔ Yalnız GERÇEK yorum (data.YORUMLAR, Google'dan birebir). aggregateRating/Review şeması KONMAZ."""
     liste = [y for y in D.YORUMLAR if konu is None or y[3] in konu]
     if not liste: return ""
@@ -703,6 +705,9 @@ def ilce_sayfasi(i):
         f'<div class="hsatir"><span class="hsatir-ik">{svg(h["ikon"])}</span><div><h3><a href="{ic(ilce_yolu(i, h))}">{e(h["h1"].format(ad=i["ad"]))}</a></h3>'
         f'<p>{e(IM["yerel"][h["slug"]].split(". ")[0])}. <a href="{ic(ilce_yolu(i, h))}">Devamını okuyun {svg("ok")}</a></p></div></div>'
         for h in D.HIZMETLER)
+    hizmetler += (f'<div class="hsatir"><span class="hsatir-ik">{svg("anahtar")}</span><div><h3><a href="{ic(SUT_YOL)}">{e(i["ad"])} acil su tesisatçısı</a></h3>'
+                  f'<p>{e(ek(i))} tıkanıklığın yanında musluk, batarya, rezervuar ve boru patlağı gibi su tesisatı arızalarına da 7/24 geliyoruz; '
+                  f'gizli kaçaklar için <a href="{ic(SU_YOL)}">su kaçağı tespiti</a> yapıyoruz. <a href="{ic(SUT_YOL)}">Devamını okuyun {svg("ok")}</a></p></div></div>')
     komsu = "".join(f'<li><a href="{ic(ilce_yolu(ILCE[k]))}">{e(ILCE[k]["ad"])} tıkanıklık açma servisi</a></li>' for k in i["komsu"])
     konum = ""
     if s == "sancaktepe":
@@ -874,12 +879,16 @@ def su_kacagi_sayfasi():
  <section class="blok"><h2>Su kaçağı tespiti nasıl yapılır?</h2>{P(K['giris'])}
   <div class="vid-izgara">{video_kart("Cihazla kaçak su tespiti")}
    <div>{h3_izgara(K['yontem'])}</div></div></section>
+ <section class="blok"><h2>Gizli su kaçağı nasıl bulunur?</h2>{P(K['gizli'])}</section>
  <section class="blok"><h2>Su kaçağı olduğunu nasıl anlarsınız?</h2>
   <ul class="tik-liste">{''.join(f'<li>{svg("tik")}<span>{e(b)}</span></li>' for b in K['belirti'])}</ul></section>
  <section class="blok kutu-vurgu"><h2>Su sayacıyla kaçak kontrolü: evde kendiniz yapın</h2>
   <ol class="adim-liste">{''.join(f'<li>{e(o)}</li>' for o in K['sayac'])}</ol></section>
  {galeri(D.SU_FOTO, "Sahadan: kaçak noktasını açma ve boru onarımı")}
  {yorumlar({"su"}, "Su kaçağı için bizi çağıranlar ne diyor?")}
+ <section class="blok"><h2>Lavabo altı, klozet altı ve musluk sızıntıları</h2>{h3_izgara(K['sizinti'], 'is-izgara is-3')}</section>
+ <section class="blok"><h2>Boru patladıysa: sıcak ve soğuk su borusu tamiri</h2>{P(K['patlak'])}
+  <p>Gece de patlasa arayabilirsiniz; <a href="{ic(SUT_YOL)}">acil su tesisatçısı</a> olarak 7/24 açığız.</p></section>
  <section class="blok"><h2>Su kaçağı İSKİ'nin mi, sizin mi sorumluluğunuzda?</h2>{P(K['sorumluluk'])}</section>
  <section class="blok kutu-uyari"><h2>{svg('uyari')} Tavandan su damlıyorsa ne yapmalısınız?</h2>{P(K['acil'])}
   {servis_no("7/24 su kaçağı ve tıkanıklık servis numarası")}</section>
@@ -896,6 +905,37 @@ def su_kacagi_sayfasi():
         f'\n<div class="kap">{guven()}</div>\n<div class="kap govde">{govde}\n</div>\n' + \
         cta("Su kaçağından mı şüpheleniyorsunuz?", "7/24 arayabilir ya da WhatsApp'tan fotoğraf, video gönderebilirsiniz.") + alt()
 
+def su_tesisat_sayfasi():
+    K = IC.SU_TESISAT; yol = SUT_YOL
+    kir_html, kir_ld = kirinti([("Anasayfa", ""), ("Acil Su Tesisatçısı", None)])
+    sema = [sema_hizmet("Anadolu Yakası Acil Su Tesisatçısı", "Su tesisatı onarımı", None, yol), sema_sss(K["sss"]), kir_ld]
+    ilce_bag = ", ".join(f'<a href="{ic(ilce_yolu(i))}">{e(i["ad"])}</a>' for i in ILCE_SIRALI)
+    isler = '<div class="is-izgara is-3">' + "".join(f'<div class="is"><h3>{e(a)}</h3><p>{bagla(m)}</p></div>' for a, m in K["isler"]) + "</div>"
+    govde = f"""
+ <section class="blok"><h2>Acil su tesisatçısına nasıl ulaşırsınız?</h2>{P(K['giris'])}
+  <p>Bize {tel_a()} numarasından 7 gün 24 saat ulaşabilir ya da {wa_a("Merhaba, su tesisatı arızası için usta istiyorum.")}. {e(sure())} Adresimiz Sancaktepe'de: {e(S['adres'])}.</p></section>
+ <section class="blok"><h2>Hangi su tesisatı işlerini yapıyoruz?</h2>{isler}</section>
+ <section class="blok"><h2>Musluk damlatıyorsa ne yapmalısınız?</h2>{P(K['musluk'])}</section>
+ <section class="blok"><h2>Rezervuar sürekli su akıtıyorsa: klozet sifonu ve iç takım arızası</h2>{P(K['rezervuar'])}</section>
+ <section class="blok kutu-uyari"><h2>{svg('uyari')} Boru patladıysa ne yapmalısınız?</h2>{P(IC.SU_KACAGI['patlak'])}
+  {servis_no("7/24 acil su tesisatçısı numarası")}</section>
+ {galeri(D.SU_FOTO, "Sahadan: açılan noktada PPR boru onarımı")}
+ <section class="blok"><h2>Su gelmiyorsa önce bunlara bakın</h2>{h3_izgara(K['su_gelmiyor'])}</section>
+ <section class="blok"><h2>Ev, apartman, site ve iş yerine geliyoruz</h2>{h3_izgara(K['yerler'])}</section>
+ {yorumlar({"genel"}, "Tesisat işi için bizi çağıranlar ne diyor?")}
+ <section class="blok fiyat-blok"><h2>Su tesisatçısı fiyatı neye göre değişir?</h2>
+  <p class="blok-giris">{e(FIYAT_KISA)} Fotoğraf ya da kısa video gönderirseniz yaklaşık bilgi de verebiliyoruz.</p></section>
+ <section class="blok"><h2>Hangi ilçelerde 7/24 tesisatçı hizmeti veriyoruz?</h2>
+  <p>Anadolu yakasının 14 ilçesine geliyoruz: {ilce_bag}. Gece, pazar günü ve bayramda da açığız.</p></section>
+ {sss_html(K['sss'], "Acil su tesisatçısı: sık sorulan sorular")}"""
+    return head("Acil Su Tesisatçısı İstanbul Anadolu Yakası | 7/24 Açık",
+                f"Musluk, batarya, rezervuar, boru patlağı ve su kaçağı için 7/24 acil su tesisatçısı. Gece, pazar ve bayramda açık. {S['tel_goster']}",
+                yol, sema) + ust("sut") + hero("Anadolu Yakası · 7/24 açık", "Anadolu Yakası Acil Su Tesisatçısı",
+        "Damlatan musluk, su akıtan rezervuar, sızdıran bağlantı ya da patlayan boru: gece, pazar günü ve bayramda da adresinize geliyor, fiyatı işe başlamadan söylüyoruz.",
+        gorsel("su-kacagi-tamiri-ppr-boru", D.SU_FOTO[1][1], oncelik=True), kir_html) + \
+        f'\n<div class="kap">{guven()}</div>\n<div class="kap govde">{govde}\n</div>\n' + \
+        cta("Tesisatınızda acil bir sorun mu var?", "7/24 arayabilir ya da WhatsApp'tan fotoğraf, video gönderebilirsiniz.") + alt()
+
 # ── anasayfa ────────────────────────────────────────────────────────────────
 ANA_SSS = [
  ("Hangi ilçelere hizmet veriyorsunuz?", "İstanbul Anadolu Yakası'nda " + ve_liste([i["ad"] for i in ILCE_SIRALI]) + " ilçelerine geliyoruz."),
@@ -904,8 +944,19 @@ ANA_SSS = [
  ("Tıkanıklık açarken kırma yapılıyor mu?", "Hayır, tıkanıklığı gider ağzından makineyle açıyoruz. Gerektiğinde hattın içini kamerayla görüyoruz; kırma ancak boru kırılmış ya da çökmüşse gündeme gelir ve bunu önce görüntüyle size gösteriyoruz."),
  ("Fiyatı ne zaman öğrenirim?", "Fotoğraf ya da videoyla yaklaşık bilgi verebiliyoruz. Kesin fiyatı usta yerinde baktıktan sonra, işe başlamadan söylüyor; onayınız olmadan işe başlamıyoruz."),
  ("Belediye ya da İSKİ evimdeki gideri açar mı?", "Hayır. Ev ve bina içindeki tesisat mülk sahibinin sorumluluğundadır. İSKİ (ALO 185) yalnızca sokaktaki ana kanalizasyon hattına bakar."),
+ ("Pazar günü ve bayramda açık mısınız?", "Evet. Pazar günü, bayramda, gece yarısı ve sabah erken saatlerde de açığız; 7 gün 24 saat arayabilirsiniz."),
+ ("Giderden kötü koku geliyor, ne yapmalıyım?", "Uzun süre kullanılmayan giderde sifondaki su kurumuş olabilir; bir bardak su dökmek çoğu zaman kokuyu keser. Koku geçmiyorsa sifonda ya da hatta tortu birikmiştir; sifonu temizleyip hattı açıyoruz."),
  ("Google Haritalar'da sizi nasıl bulurum?", f"Google Haritalar'da {S['isletme']} adıyla kayıtlıyız. Adresimiz: {S['adres']}."),
 ]
+
+YONTEM = [("Gider açma makinesi (spiral)", "Elektrikli makinenin spiral ucu gider ağzından hattın içine ilerler, saçı, kâğıdı ve sertleşmiş birikintiyi söküp parçalar. Lavabo, klozet ve duş giderinde en sık kullandığımız yöntem."),
+          ("Basınçlı su ile gider açma", "Yağlı pimaş hatlarında spiral suyu geçirir ama çepere yapışan yağı bırakır. Basınçlı su çeperi yıkayıp hattı temizler; tabelamızdaki \"yağlı pimaş hatlarınızı kırmadan yıkayıp ilk günkü gibi tertemiz edelim\" sözü buradan."),
+          ("Kameralı tespit", "Tekrarlayan ya da sebebi belli olmayan tıkanıklıkta makaralı kamerayı hattın içine sürüp tıkanıklığın yerini ve sebebini görüyoruz."),
+          ("Kimyasal yok", "Tuz ruhu ya da kostik dökmüyoruz; kalıcı çözüm değil ve borulara, contalara zarar verebiliyor.")]
+YERLER = [("Ev ve daire içi gider", "Daire içindeki lavabo, klozet, duş ve mutfak giderinin tıkanıklığını kırmadan açıyoruz."),
+          ("Apartman: kolon ve ana boru", "Birkaç dairede birden su geri geliyorsa sorun kolon borusunda ya da bodrum kattaki ana borudadır. Kolon borusu tıkanıklığını temizleme ağzından açıyoruz; bina bağlantısından sonrası İSKİ'nin kanalizasyonudur."),
+          ("Site tesisatçısı", "Sitelerde blok hatları ve ortak gider hatlarında site yönetimiyle birlikte çalışıyoruz."),
+          ("İş yeri, restoran ve kafe", "Restoran mutfağında yağ, kafe ve berber gibi iş yerlerinde yoğun kullanılan lavabo ve tuvalet sık tıkanır. Çalışma saatinizi aksatmamak için zamanı sizinle planlıyoruz.")]
 
 def ana_hero():
     kart = f'''<a class="kam-panel koyu" data-egim href="{ic(KAMERA_YOL)}">
@@ -953,8 +1004,8 @@ def anasayfa():
                  ("Fiyat işe başlamadan", "Usta durumu gördükten sonra fiyatı söylüyor; onayınızı almadan işe başlamıyoruz."),
                  ("7/24, ortalama 30 dakika", "Gece, hafta sonu ve bayram dahil açığız; Anadolu yakasında adrese ortalama 30 dakikada ulaşıyoruz.")]
     ilce_bag = ", ".join(f'<a href="{ic(ilce_yolu(i))}">{e(i["ad"])}</a>' for i in ILCE_SIRALI)
-    return head("Gider Tıkanıklık Açma | Anadolu Yakası 7/24 Tıkanıklık Açma",
-                "Anadolu Yakası gider tıkanıklık açma: tuvalet, lavabo, banyo ve mutfak gideri. 7/24, kırmadan, kameralı tespit, "
+    return head("Gider Tıkanıklık Açma İstanbul Anadolu Yakası | 7/24 Acil",
+                "İstanbul Anadolu Yakası acil gider açma: tuvalet, lavabo, banyo ve mutfak gideri. 7/24, kırmadan, kameralı tespit, "
                 f"fiyat işe başlamadan söylenir. {S['tel_goster']}", "", sema) + ust() + f"""
 {ana_hero()}
 <div class="kap">{guven()}</div>
@@ -968,15 +1019,21 @@ def anasayfa():
  <section class="blok"><p class="bolum-ust">Hizmetlerimiz</p><h2>Anadolu Yakası'nda hangi tıkanıklık açma hizmetlerini veriyoruz?</h2>
   <p class="blok-giris">Her hizmetin ilçenize özel sayfasında o bölgedeki binalarda en sık karşılaştığımız durumları da anlattık.</p>
   <div class="hkart-izgara">{kartlar}</div>
-  <p>Tıkanıklığın yanında <a href="{ic(SU_YOL)}">su kaçağı tespiti</a> de yapıyoruz: kaçağın yerini cihazla dinleyip yalnızca o noktayı açıyoruz.</p></section>
+  <p>Tıkanıklığın yanında <a href="{ic(SU_YOL)}">su kaçağı tespiti</a> de yapıyoruz: kaçağın yerini cihazla dinleyip yalnızca o noktayı açıyoruz. Musluk, batarya, rezervuar ve boru patlağı için <a href="{ic(SUT_YOL)}">acil su tesisatçısı</a> olarak da geliyoruz.</p></section>
+ <section class="blok"><p class="bolum-ust">Yöntem</p><h2>Gideri hangi yöntemle açıyoruz?</h2>
+  <p class="blok-giris">Kimyasal kullanmadan tıkanıklık açıyoruz. Hangi yöntemi seçeceğimizi tıkanıklığın yeri ve sebebi belirliyor.</p>
+  {h3_izgara(YONTEM, "is-izgara")}</section>
+ <section class="blok"><p class="bolum-ust">Kimlere geliyoruz?</p><h2>Ev, apartman, site ve iş yerlerinde gider açma</h2>
+  {h3_izgara(YERLER, "is-izgara")}</section>
  <section class="blok"><p class="bolum-ust">Hakkımızda</p><h2>Neden {e(S['isletme'])}?</h2>
   {P(IC.TANITIM)}
   {h3_izgara(neden_biz)}
   <p><a class="metin-bag" href="{ic('hakkimizda/')}">Hakkımızda daha fazlası {svg('ok')}</a></p></section>
  {yorumlar()}
  <section class="blok">
-  <p class="bolum-ust">Acil servis</p><h2>Anadolu Yakası 7/24 Acil Tıkanıklık Açma Servisi</h2>
+  <p class="bolum-ust">Acil servis</p><h2>Anadolu Yakası 7/24 Acil Tıkanıklık ve Gider Açma Servisi</h2>
   <p>Gece yarısı taşan bir klozet, misafir gelmeden kapanan bir mutfak gideri, bayram sabahı birikmeye başlayan duş suyu… Tıkanıklık mesai saati bilmiyor, biz de bilmiyoruz :) Anadolu yakasının 14 ilçesinde 7 gün 24 saat acil tıkanıklık açma servisi veriyoruz; aradığınızda önce suyu nasıl durduracağınızı anlatıyor, sonra ekibi yola çıkarıyoruz.</p>
+  <p>"Şu an açık tesisatçı var mı?" diye arıyorsanız cevap evet: gece yarısı da, sabah erken de, pazar günü ve bayramda da telefonumuz açık. Tıkanıklık dışındaki musluk, rezervuar ve boru arızaları için <a href="{ic(SUT_YOL)}">acil su tesisatçısı</a> sayfamıza bakabilirsiniz.</p>
   {servis_no("Anadolu Yakası 7/24 acil tıkanıklık açma servis numarası")}
  </section>
  <section class="blok" id="bolgeler"><p class="bolum-ust">Hizmet bölgeleri</p><h2>Anadolu Yakası'nda hangi ilçelere hizmet veriyoruz?</h2>
@@ -997,7 +1054,7 @@ def anasayfa():
   {sorumluluk_tablo()}
  </section>
  {uzmanlik()}
- {fiyat_faktor("Anadolu Yakası'nda tıkanıklık açma fiyatları ne kadar?")}
+ {fiyat_faktor("Anadolu Yakası'nda tıkanıklık ve gider açma fiyatları ne kadar?")}
  {usta_dikkat()}
  {rehber_kutu(IC.REHBER, "Tıkanıklık rehberi: evde ne yapabilirsiniz?")}
  {saha_galeri("Sahadan fotoğraflar")}
@@ -1148,6 +1205,7 @@ def main():
     for h in D.HIZMETLER: yollar.append(sayfa(hiz_yolu(h), hizmet_sayfasi, h))
     yollar.append(sayfa(KAMERA_YOL, kamera_sayfasi))
     yollar.append(sayfa(SU_YOL, su_kacagi_sayfasi))
+    yollar.append(sayfa(SUT_YOL, su_tesisat_sayfasi))
     for i in ILCE_SIRALI:
         yollar.append(sayfa(ilce_yolu(i), ilce_sayfasi, i))
         for h in D.HIZMETLER: yollar.append(sayfa(ilce_yolu(i, h), ilce_hizmet_sayfasi, i, h))

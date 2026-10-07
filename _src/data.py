@@ -94,7 +94,7 @@ HIZMETLER = [
  {"slug":"tuvalet-tikanikligi-acma","ad":"Tuvalet Tıkanıklığı Açma","kisa":"Tuvalet tıkanıklığı açma","ikon":"klozet",
   "h1":"{ad} Tuvalet Tıkanıklığı Açma","title":"{ad} Tuvalet Tıkanıklığı Açma | Klozet, Alaturka · 7/24",
   "hub_h1":"Anadolu Yakası Tuvalet Tıkanıklığı Açma","hub_neden":"Tuvalet neden tıkanır?",
-  "hub_title":"Anadolu Yakası Tuvalet Tıkanıklığı Açma | Klozet · 7/24",
+  "hub_title":"Tuvalet ve Klozet Tıkanıklığı Açma İstanbul Anadolu · 7/24",
   "ozet":"Klozet, asma klozet ve alaturka tuvalet tıkanıklığını çoğu zaman klozeti yerinden sökmeden, makineyle açıyoruz.",
   "isler":[
    ("Yere monte klozet","Sifon çekince yükselen suyu klozetin kendi dirseğinden spiral makineyle açıyoruz; klozet yerinde kalıyor."),
@@ -102,7 +102,8 @@ HIZMETLER = [
    ("Alaturka tuvalet","Alaturkanın dirseği derin ve dar; spirali bu dirsekten geçirip tıkacı parçalıyor, ardından hattı suyla deniyoruz."),
    ("Düşen cisim","Diş fırçası, oyuncak, telefon kapağı… Önce kamerayla yerini görüyor, sonra iterek değil yakalayarak çıkarmaya çalışıyoruz."),
    ("Kolondan gelen tıkanma","Alt katlarda da şikâyet varsa sorun klozette değil bina kolonundadır; kolonu temizleme ağzından açıyoruz."),
-   ("Koku ve fokurdama","Tıkanıklık olmadan da koku gelebilir: kuruyan sifon suyu, gevşeyen conta, tıkalı havalık. Sebebi ayırıp ona göre çözüyoruz."),
+   ("Koku ve fokurdama","Klozet kötü koku yapıyorsa sebep her zaman tıkanıklık değildir: kuruyan sifon suyu, gevşeyen conta, tıkalı havalık. Sebebi ayırıp ona göre çözüyoruz."),
+   ("Rezervuar akıntısı ve iç takım","Tuvalet taşmıyor ama rezervuar sürekli su akıtıyorsa sorun iç takımdadır. Gömme ya da dış rezervuarın iç takımını değiştiriyoruz."),
   ],
   "belirti":[
    "Sifonu çekince su klozetin ağzına kadar yükseliyor",
@@ -124,14 +125,14 @@ HIZMETLER = [
    ("Tuvalet açarken klozet sökülüyor mu?","Çoğu durumda hayır; tıkanıklığı klozetin içinden makineyle açıyoruz. Asma klozette ya da sıkışmış sert bir cisimde sökmek gerekebilir; söktüğümüzde contayı yenileyip yerine takıyoruz."),
    ("Islak mendil gerçekten tuvaleti tıkar mı?","Evet. Paketinde \"tuvalete atılabilir\" yazsa bile tuvalet kâğıdı gibi suda dağılmıyor; dirseklerde ve kolonun döndüğü noktada birikip tıkaç oluşturuyor."),
    ("Fiyatı önceden söylüyor musunuz?","Evet. Usta durumu yerinde gördükten sonra fiyatı söylüyor; onayınızı almadan işe başlamıyoruz."),
-   ("Gece tuvalet tıkanırsa arayabilir miyim?","Evet. 7 gün 24 saat çalışıyoruz; gece yarısı da hafta sonu da arayabilirsiniz."),
+   ("Tuvalet taşıyor, gece arayabilir miyim?","Evet. Tuvalet taşıyorsa acil servis için 7/24 açığız; gece yarısı, pazar günü ve bayramda da arayabilirsiniz. Taşma varsa önce rezervuarın ara musluğunu kapatın."),
   ]},
 
  {"slug":"lavabo-tikanikligi-acma","ad":"Lavabo Tıkanıklığı Açma","kisa":"Lavabo tıkanıklığı açma","ikon":"damla",
   "h1":"{ad} Lavabo Tıkanıklığı Açma","title":"{ad} Lavabo Tıkanıklığı Açma | Kırmadan · 7/24",
   "hub_h1":"Anadolu Yakası Lavabo Tıkanıklığı Açma","hub_neden":"Lavabo neden tıkanır?",
-  "hub_title":"Anadolu Yakası Lavabo Tıkanıklığı Açma | Kırmadan · 7/24",
-  "ozet":"Banyo ve el yüzü lavabosunda yavaş akan ya da hiç gitmeyen suyu sifondan ve hattan kırmadan açıyoruz.",
+  "hub_title":"Lavabo Tıkanıklığı Açma İstanbul Anadolu Yakası · 7/24",
+  "ozet":"Banyo ve el yüzü lavabosunda yavaş akan ya da hiç gitmeyen lavabo giderini sifondan ve hattan kırmadan açıyoruz.",
   "isler":[
    ("Sifon temizliği","Lavabonun altındaki kıvrımlı parçayı söküp içindeki saç, sabun ve diş macunu birikintisini temizliyor, contalarını kontrol ederek geri takıyoruz."),
    ("Duvar içi hat","Sifon temizse tıkanıklık duvarın içindedir. Spiral makineyi sifon çıkışından ilerletip bu bölümü açıyoruz."),
@@ -157,16 +158,16 @@ HIZMETLER = [
   "sss":[
    ("{ad}{loc} lavabo tıkanıklığı için ne kadar sürede geliyorsunuz?","[SURE] Arama sırasında trafik ve iş yoğunluğuna göre size tahmini süreyi söylüyoruz."),
    ("Lavabo açmak için fayans kırılıyor mu?","Hayır. Lavabo tıkanıklığını sifondan ve sifon çıkışından makineyle açıyoruz. Kırma ancak boru kırılmış ya da çökmüşse gündeme gelir; onu da önce kamerayla görüp size gösteriyoruz."),
-   ("Lavabo neden sürekli kokuyor?","En sık sebep sifonda biriken saç ve sabun tortusunun çürümesidir. Lavabo uzun süre kullanılmadıysa sifondaki su kurumuş da olabilir; o zaman kanalizasyon kokusu doğrudan içeri gelir."),
+   ("Lavabo kötü koku yapıyor, neden?","En sık sebep sifonda biriken saç ve sabun tortusunun çürümesidir. Lavabo uzun süre kullanılmadıysa sifondaki su kurumuş da olabilir; o zaman kanalizasyon kokusu doğrudan içeri gelir."),
    ("Fiyatı ne zaman öğrenirim?","Fotoğraf ya da videoyla yaklaşık bilgi verebiliyoruz. Kesin fiyatı usta yerinde gördükten sonra, işe başlamadan söylüyor."),
-   ("Gece ya da hafta sonu geliyor musunuz?","Evet. 7 gün 24 saat hizmet veriyoruz."),
+   ("Gece yarısı lavabo tıkanırsa geliyor musunuz?","Evet. 7/24 lavabo tıkanıklığı açma hizmeti veriyoruz; gece yarısı da sabah erken de arayabilirsiniz."),
   ]},
 
  {"slug":"banyo-gideri-acma","ad":"Banyo Gideri Açma","kisa":"Banyo gideri açma","ikon":"dus",
   "h1":"{ad} Banyo Gideri Açma","title":"{ad} Banyo Gideri Açma | Duş, Küvet, Yer Süzgeci · 7/24",
   "hub_h1":"Anadolu Yakası Banyo Gideri Açma","hub_neden":"Duş, küvet ve yer süzgeci neden tıkanır?",
-  "hub_title":"Anadolu Yakası Banyo Gideri Açma | Duş, Küvet · 7/24",
-  "ozet":"Duş teknesi, küvet ve banyo yer süzgecindeki tıkanıklığı kırmadan, süzgeç ağzından makineyle açıyoruz.",
+  "hub_title":"Banyo Gideri Tıkanıklığı Açma İstanbul Anadolu Yakası · 7/24",
+  "ozet":"Duş teknesi, küvet ve yer süzgecindeki banyo gideri tıkanıklığını kırmadan, süzgeç ağzından makineyle açıyoruz.",
   "isler":[
    ("Duş teknesi gideri","Duşta biriken suyun sebebi çoğu zaman süzgecin hemen altındaki dar dirsekte toplanan saç; süzgeci söküp dirseği temizliyoruz."),
    ("Küvet gideri","Küvetin taşma ve gider bağlantısı küvetin altında kalıyor; tıkanıklığı gider ağzından spiralle açıp taşma hattını da kontrol ediyoruz."),
@@ -200,8 +201,8 @@ HIZMETLER = [
  {"slug":"mutfak-gideri-acma","ad":"Mutfak Gideri Açma","kisa":"Mutfak gideri açma","ikon":"evye",
   "h1":"{ad} Mutfak Gideri Açma","title":"{ad} Mutfak Gideri Açma | Evye Tıkanıklığı · 7/24",
   "hub_h1":"Anadolu Yakası Mutfak Gideri Açma","hub_neden":"Mutfak gideri neden tıkanır?",
-  "hub_title":"Anadolu Yakası Mutfak Gideri Açma | Evye Tıkanıklığı · 7/24",
-  "ozet":"Yağ ve yemek artığıyla tıkanan mutfak evyesini ve bağlı olduğu hattı kırmadan, makineyle açıyoruz.",
+  "hub_title":"Mutfak Lavabosu ve Gider Açma İstanbul Anadolu Yakası · 7/24",
+  "ozet":"Yağ ve yemek artığıyla tıkanan mutfak lavabosunu (evyeyi) ve bağlı olduğu hattı kırmadan, makineyle açıyoruz.",
   "isler":[
    ("Evye sifonu","Evyenin altındaki sifonu ve bulaşık makinesi bağlantısını söküp içindeki yağlı tortuyu temizliyoruz."),
    ("Yağ tıkanıklığı","Soğuyup boru çeperine yapışan yağı spiral uçla söküyor, gerekirse basınçlı suyla çeperi yıkıyoruz."),
